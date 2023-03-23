@@ -1,0 +1,9 @@
+.table-scroll {
+    overflow-x: hidden;
+}
+
+@media (max-width: 1380px) {
+    .table-scroll {
+        overflow-x: scroll;
+    }
+}

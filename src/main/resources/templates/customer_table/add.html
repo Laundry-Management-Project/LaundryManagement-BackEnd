@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/common/head :: head"></head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul th:replace="/fragment/common/sidebar.html :: sidebar"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav th:replace="fragment/common/nav :: nav"></nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid m-auto w-75">
+                    <div class="card shadow">
+                        <div class="card-header">
+                            <h6>손님 정보 입력</h6>
+                        </div>
+                        <div class="card-body p-4">
+                            <form th:action th:object="${post}" method="Post" id="customerForm" novalidate>
+                                <div class="row">
+                                    <div class="col">
+                                       <label for="customerName" class="text-truncate">이름 입력</label>
+                                       <input type="text" th:field="*{name}" th:errorclass="is-invalid" class="form-control form-control-user" id="customerName" placeholder="이름을 입력해주세요." required>
+                                       <div class="invalid-feedback">
+                                           * 이름은 공백일 수 없습니다.
+                                       </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="customerPhone" class="text-truncate">전화번호 입력</label>
+                                        <input type="text" th:field="*{phone}" th:errorclass="is-invalid" class="form-control form-control-user" id="customerPhone" placeholder="전화번호를 입력해주세요." required>
+                                        <div class="invalid-feedback" th:text="#{invalid.phone}">
+                                            * 잘못된 전화번호 양식 또는 공백일 수 없습니다.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pt-3">
+                                    <div class="col">
+                                        <label for="customerClothCount" class="text-truncate">맡긴 옷 개수</label>
+                                        <input type="text" th:field="*{clothCount}" th:errorclass="is-invalid" class="form-control form-control-user" id="customerClothCount" placeholder="맡긴 옷의 개수를 입력해주세요." required>
+                                        <div class="invalid-feedback">
+                                            * 공백 또는 문자는 허용하지 않습니다.
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="customerClothStatus" class="text-truncate">세탁물 상태</label>
+                                        <select class="form-control" id="customerClothStatus" th:field="*{clothStatus}">
+                                            <option th:each="status : ${T(project.laundry.entity.status.ClothStatus).values()}"
+                                                    th:value="${status}"
+                                                    th:text="${status.status}"
+                                            ></option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="customerPrice" class="text-truncate">가격</label>
+                                        <input type="text" th:field="*{price}" th:errorclass="is-invalid" class="form-control form-control-user" id="customerPrice" placeholder="가격을 입력해주세요." required>
+                                        <div class="invalid-feedback">
+                                            * 공백 또는 문자는 허용하지 않습니다.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pt-3">
+                                    <div class="col">
+                                        <label for="customerContent" class="text-truncate">추가 정보</label>
+                                        <textarea th:field="*{content}" class="form-control" id="customerContent"
+                                                  placeholder="추가 정보를 입력해주세요."
+                                                  style="resize: none; height: 7.25rem;">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <button class="btn btn-lg btn-block btn-success mr-3" type="submit" form="customerForm">등록</button>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-lg btn-block btn-danger"
+                                                onclick="location.href='tables.html'" th:onclick="|location.href='@{/customer-list}'|" type="button">
+                                            취소
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer th:replace="fragment/common/footer :: footer"></footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div th:replace="fragment/common/logout_modal :: logoutModal"></div>
+
+    <div th:replace="fragment/common/script :: script"></div>
+
+</body>
+
+</html>

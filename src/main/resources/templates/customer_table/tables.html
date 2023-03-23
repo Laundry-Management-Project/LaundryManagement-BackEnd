@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment/common/head :: head"></head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <ul th:replace="/fragment/common/sidebar.html :: sidebar"></ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <nav th:replace="fragment/common/nav :: nav"></nav>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col">
+                            <!-- Page Heading -->
+                            <h1 class="h3 mb-2 text-gray-800" th:text="#{customer.title}">손님 목록</h1>
+                            <p class="mb-4" th:text="#{customer.title.sub}">손님들의 목록을 등록, 삭제하는 페이지입니다.</p>
+                        </div>
+                    </div>
+
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <span class="m-0 font-weight-bold text-primary align-items-center">손님 목록</span>
+                            <a class="text-white" th:href="@{/customer-list/add}">
+                                <button type="button" class="btn btn-primary ml-3">등록</button>
+                            </a>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>번호</th>
+                                        <th>이름</th>
+                                        <th>전화번호</th>
+                                        <th>세탁물 개수</th>
+                                        <th>세탁물 상태</th>
+                                        <th>가격</th>
+                                        <th>등록 시간</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="post : ${posts}" th:onclick="|location.href='@{/customer-list/{postId}/detail(postId=${post.id})}'|">
+                                            <td th:text="${post.id}" class="text-truncate">번호</td>
+                                            <td th:text="${post.name}" class="text-truncate">이름</td>
+                                            <td th:text="${post.phone}" class="text-truncate">전화번호</td>
+                                            <td th:text="${post.clothCount}" class="text-truncate">세탁물 개수</td>
+                                            <td th:text="${post.clothStatus.getStatus()}" class="text-truncate">세탁물 상태</td>
+                                            <td th:text="${post.price}" class="text-truncate">가격</td>
+                                            <td th:text="${post.createTime}" class="text-truncate">등록 시간</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer th:replace="fragment/common/footer :: footer"></footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div th:replace="fragment/common/logout_modal :: logoutModal"></div>
+
+
+    <div th:replace="fragment/common/script :: script"></div>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>
