@@ -25,7 +25,7 @@ public class MainController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<statisticsDto> mainPage(Model model) {
+    public ResponseEntity<statisticsDto> mainPage() {
 
         Long visitsInMonth = service.getVisitsInMonth();
         Long revenueInMonth = service.getRevenueInMonth();

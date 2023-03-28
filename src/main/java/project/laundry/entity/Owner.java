@@ -1,6 +1,7 @@
 package project.laundry.entity;
 
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,12 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class owner {
+@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Owner {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "ow_id")
+    @Column(name = "uid")
     private String id;
 
     @Column(name = "owner_id")
@@ -26,7 +31,7 @@ public class owner {
     private String phone;
 
     @OneToMany(mappedBy = "owner")
-    private List<business> businesses = new ArrayList<>();
+    private List<Business> Businesses = new ArrayList<>();
 
 
 }

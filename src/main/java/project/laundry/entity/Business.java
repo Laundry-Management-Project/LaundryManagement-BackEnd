@@ -1,29 +1,28 @@
 package project.laundry.entity;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+// 사업징
 @Entity
-@Getter @Setter
-public class customer {
+public class Business {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "cu_id")
+    @Column(name = "bu_id")
     private String id;
-
-    @Column(name = "customer_id")
-    private String customer_id;
-
-    private String password;
 
     private String name;
 
-    private String phone;
+    private String address;
 
+    // 영업시간  -> 07:00 오전 ~ 11:00 오후
+    private String bu_hour;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ow_id")
+    private Owner owner;
 
 }
