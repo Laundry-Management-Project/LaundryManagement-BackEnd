@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.laundry.dto.StatisticsDto.revenueGraphDto;
-import project.laundry.dto.StatisticsDto.statisticsDto;
-import project.laundry.dto.post_dto.postDto;
+import project.laundry.dto.statistics.revenueGraphDto;
+import project.laundry.dto.statistics.statisticsDto;
+import project.laundry.dto.post.postDto;
 import project.laundry.service.PostService;
 import project.laundry.service.StatisticsService;
 

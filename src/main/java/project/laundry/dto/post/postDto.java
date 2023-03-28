@@ -1,4 +1,4 @@
-package project.laundry.dto.post_dto;
+package project.laundry.dto.post;
 
 import lombok.*;
 import project.laundry.entity.status.ClothStatus;

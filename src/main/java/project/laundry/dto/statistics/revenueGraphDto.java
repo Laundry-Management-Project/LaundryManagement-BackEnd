@@ -1,4 +1,4 @@
-package project.laundry.dto.StatisticsDto;
+package project.laundry.dto.statistics;
 
 import lombok.Builder;
 import lombok.Data;

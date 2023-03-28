@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import project.laundry.dto.post_dto.postDto;
+import project.laundry.dto.post.postDto;
 import project.laundry.service.PostService;
 
 import javax.validation.Valid;

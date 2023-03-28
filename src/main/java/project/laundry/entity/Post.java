@@ -2,7 +2,7 @@ package project.laundry.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import project.laundry.dto.post_dto.postDto;
+import project.laundry.dto.post.postDto;
 import project.laundry.entity.status.ClothStatus;
 
 import javax.persistence.*;
@@ -20,7 +20,7 @@ public class Post extends TimeEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "post_id")
+    @Column(name = "id")
     private String id;
 
     @Column(name = "customer_name")
@@ -38,10 +38,6 @@ public class Post extends TimeEntity {
 
     @Lob
     private String content;
-
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private owner owner;
 
 
     @Builder.Default

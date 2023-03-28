@@ -1,6 +1,8 @@
 package project.laundry.entity;
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,16 +11,22 @@ import java.util.List;
 public class owner {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "ow_id")
+    private String id;
+
     @Column(name = "owner_id")
-    private Long id;
+    private String owner_id;
 
-    private String StoreName;
+    private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-    private List<customer> customerList = new ArrayList<>();
+    private String name;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "diary_id")
-    private Visit diary;
+    private String phone;
+
+    @OneToMany(mappedBy = "owner")
+    private List<business> businesses = new ArrayList<>();
+
+
 }

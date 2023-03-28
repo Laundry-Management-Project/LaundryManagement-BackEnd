@@ -1,8 +1,8 @@
-package project.laundry.dto.StatisticsDto;
+package project.laundry.dto.statistics;
 
 import lombok.Builder;
 import lombok.Data;
-import project.laundry.dto.post_dto.postDto;
+import project.laundry.dto.post.postDto;
 
 import java.util.List;
 
