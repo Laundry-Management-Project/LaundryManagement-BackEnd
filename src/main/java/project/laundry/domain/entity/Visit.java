@@ -1,4 +1,4 @@
-package project.laundry.entity;
+package project.laundry.domain.entity;
 
 import lombok.*;
 

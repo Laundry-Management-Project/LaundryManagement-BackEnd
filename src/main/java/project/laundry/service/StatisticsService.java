@@ -3,7 +3,7 @@ package project.laundry.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.entity.status.ClothStatus;
+import project.laundry.domain.entity.status.ClothStatus;
 import project.laundry.repository.PostRepository;
 import project.laundry.repository.StatisticsRepository;
 

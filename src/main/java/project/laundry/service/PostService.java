@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.dto.post.postDto;
-import project.laundry.entity.Post;
-import project.laundry.entity.Visit;
+import project.laundry.domain.dto.postDto;
+import project.laundry.domain.entity.Post;
+import project.laundry.domain.entity.Visit;
 import project.laundry.repository.PostRepository;
 
 import java.time.LocalDate;

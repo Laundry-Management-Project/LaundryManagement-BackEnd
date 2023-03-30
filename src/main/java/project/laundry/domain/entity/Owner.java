@@ -1,4 +1,4 @@
-package project.laundry.entity;
+package project.laundry.domain.entity;
 
 
 import lombok.*;
@@ -30,7 +30,7 @@ public class Owner {
 
     private String phone;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Business> Businesses = new ArrayList<>();
 
 

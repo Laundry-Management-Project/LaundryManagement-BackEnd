@@ -1,4 +1,4 @@
-package project.laundry.entity.status;
+package project.laundry.domain.entity.status;
 
 public enum ClothStatus {
     WASH_BEFORE("세탁 전"),

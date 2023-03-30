@@ -5,10 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import project.laundry.entity.Post;
-import project.laundry.entity.status.ClothStatus;
-
-import java.util.List;
+import project.laundry.domain.entity.Post;
+import project.laundry.domain.entity.status.ClothStatus;
 
 public interface PostRepository extends JpaRepository<Post, String> {
 

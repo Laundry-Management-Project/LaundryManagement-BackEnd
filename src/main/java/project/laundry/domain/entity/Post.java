@@ -1,9 +1,9 @@
-package project.laundry.entity;
+package project.laundry.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import project.laundry.dto.post.postDto;
-import project.laundry.entity.status.ClothStatus;
+import project.laundry.domain.dto.postDto;
+import project.laundry.domain.entity.status.ClothStatus;
 
 import javax.persistence.*;
 import java.util.ArrayList;

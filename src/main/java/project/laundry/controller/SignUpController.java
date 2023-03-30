@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import project.laundry.dto.signup.signUpDto;
-import project.laundry.dto.status.responseStatus;
-import project.laundry.service.SignUpService;
+import project.laundry.domain.dto.status.ownerResponseStatus;
+import project.laundry.domain.form.signUpForm;
+import project.laundry.domain.dto.status.customerResponseStatus;
+import project.laundry.service.customer.CustomerSignUpService;
+import project.laundry.service.owner.OwnerSignUpService;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 public class SignUpController {
 
-    private final SignUpService service;
+    private final CustomerSignUpService customerSignUpService;
+
+    private final OwnerSignUpService ownerSignUpService;
 
     @GetMapping("/signup")
     public ResponseEntity<String> signUp() {
@@ -28,17 +32,27 @@ public class SignUpController {
     }
 
 
-    @PostMapping("/signup")
-    public ResponseEntity<responseStatus> post_signUp(@RequestBody @Validated signUpDto dto, BindingResult br) {
+    @PostMapping("/signup/cu")
+    public ResponseEntity<customerResponseStatus> customer_signUp(@RequestBody @Validated signUpForm form, BindingResult br) {
 
         if(br.hasErrors()) {
             log.error(br.toString());
-            responseStatus rs = new responseStatus("잘못된 입력입니다.", false);
+            customerResponseStatus rs = new customerResponseStatus("잘못된 입력입니다.", false, null);
             return new ResponseEntity<>(rs, HttpStatus.BAD_REQUEST);
         }
 
-        return service.save(dto);
+        return customerSignUpService.save(form);
+    }
 
+
+    @PostMapping("/signup/ow")
+    public ResponseEntity<ownerResponseStatus> owner_signup(@RequestBody @Validated signUpForm form, BindingResult br) {
+        if(br.hasErrors()) {
+            log.error(br.toString());
+            ownerResponseStatus rs = new ownerResponseStatus("잘못된 입력입니다.", false, null);
+            return new ResponseEntity<>(rs, HttpStatus.BAD_REQUEST);
+        }
+        return ownerSignUpService.save(form);
     }
 
 }

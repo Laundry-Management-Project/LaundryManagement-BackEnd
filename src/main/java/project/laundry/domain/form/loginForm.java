@@ -1,4 +1,4 @@
-package project.laundry.dto.login;
+package project.laundry.domain.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
-public class loginDto {
+public class loginForm {
 
     @NotBlank
     private String id;
@@ -15,7 +15,4 @@ public class loginDto {
     @NotBlank
     private String password;
 
-    // 손님 - "CU", 사장 - "OW"
-    @NotBlank
-    private String userType;
 }

@@ -1,11 +1,19 @@
-package project.laundry.entity;
+package project.laundry.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 // 사업징
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class Business {
 
     @Id
@@ -18,9 +26,10 @@ public class Business {
 
     private String address;
 
-    // 영업시간  -> 07:00 오전 ~ 11:00 오후
+    // 영업시간  -> 07:00 ~ 17:00
     private String bu_hour;
 
+    // 사장님 uid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ow_id")
     private Owner owner;

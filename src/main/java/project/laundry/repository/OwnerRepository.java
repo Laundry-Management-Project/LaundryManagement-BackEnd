@@ -3,7 +3,10 @@ package project.laundry.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import project.laundry.entity.Owner;
+import project.laundry.domain.entity.Business;
+import project.laundry.domain.entity.Owner;
+
+import java.util.List;
 
 public interface OwnerRepository extends JpaRepository<Owner, String> {
 
@@ -11,4 +14,7 @@ public interface OwnerRepository extends JpaRepository<Owner, String> {
     Owner findByOwner_idAndPassword(@Param("owner_id") String owner_id, @Param("password") String password);
     @Query("SELECT o FROM Owner o WHERE o.owner_id = :owner_id")
     Owner findByOwner_id(@Param("owner_id") String owner_id);
+
+
+
 }

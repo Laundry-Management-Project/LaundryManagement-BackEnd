@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import project.laundry.dto.post.postDto;
+import project.laundry.domain.dto.postDto;
 
 @SpringBootTest
 @Slf4j

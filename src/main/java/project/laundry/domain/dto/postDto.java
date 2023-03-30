@@ -1,7 +1,7 @@
-package project.laundry.dto.post;
+package project.laundry.domain.dto;
 
 import lombok.*;
-import project.laundry.entity.status.ClothStatus;
+import project.laundry.domain.entity.status.ClothStatus;
 
 import javax.validation.constraints.*;
 
