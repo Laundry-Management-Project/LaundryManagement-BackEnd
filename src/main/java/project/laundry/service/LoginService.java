@@ -21,7 +21,7 @@ public class LoginService {
 
     public ResponseEntity<responseStatus> authenticateLogin(loginDto dto) {
 
-        if (dto.getLoginType().equals("CU")) {
+        if (dto.getUserType().equals("CU")) {
             Customer customer = customerRepository.findByCustomer_idAndPassword(dto.getId(), dto.getPassword());
 
             if(customer == null) {
@@ -32,7 +32,7 @@ public class LoginService {
             return ResponseEntity.ok(rs);
         }
 
-        if(dto.getLoginType().equals("OW")) {
+        if(dto.getUserType().equals("OW")) {
             Owner owner = ownerRepository.findByOwner_idAndPassword(dto.getId(), dto.getPassword());
 
             if(owner == null) {
