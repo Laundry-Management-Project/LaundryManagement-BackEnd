@@ -2,6 +2,7 @@ package project.laundry.domain.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -31,7 +32,7 @@ public class Owner {
     private String phone;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private List<Business> Businesses = new ArrayList<>();
+    private List<Business> businesses = new ArrayList<>();
 
 
 }

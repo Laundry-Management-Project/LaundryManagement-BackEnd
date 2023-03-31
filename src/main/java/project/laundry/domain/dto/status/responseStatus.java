@@ -1,12 +1,11 @@
 package project.laundry.domain.dto.status;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
-@NoArgsConstructor
-public class responseStatus {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+public abstract class responseStatus {
 
     private String message;
 

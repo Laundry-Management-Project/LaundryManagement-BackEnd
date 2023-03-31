@@ -20,7 +20,7 @@ public class Business {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "bu_id")
-    private String id;
+    private String uid;
 
     private String name;
 

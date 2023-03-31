@@ -26,24 +26,18 @@ public class CustomerSignUpService {
     public ResponseEntity<customerResponseStatus> save(signUpForm form) {
 
         try {
-            if(form.getUserType().equals("CU")) {
+            Customer customer = customerEntity(form);
 
-                Customer customer = customerEntity(form);
-
-                if(isDuplicateCustomer(form.getId())) {
-                    customerResponseStatus rs = new customerResponseStatus("중복된 아이디 입니다.", false, customer.getId());
-                    return ResponseEntity.badRequest().body(rs);
-                }
-
-
-                customerRepository.save(customer);
-                customerResponseStatus rs = new customerResponseStatus("회원 가입이 완료 되었습니다.", true, customer.getId());
-                return ResponseEntity.ok(rs);
-
+            if(isDuplicateCustomer(form.getId())) {
+                customerResponseStatus rs = new customerResponseStatus("중복된 아이디 입니다.", false, customer.getId());
+                return ResponseEntity.badRequest().body(rs);
             }
 
-            customerResponseStatus rs = new customerResponseStatus("회원 가입에 실패 했습니다.", false, form.getId());
-            return ResponseEntity.internalServerError().body(rs);
+
+            customerRepository.save(customer);
+            customerResponseStatus rs = new customerResponseStatus("회원 가입이 완료 되었습니다.", true, customer.getId());
+            return ResponseEntity.ok(rs);
+
         } catch (DataIntegrityViolationException e) {
             customerResponseStatus rs = new customerResponseStatus("회원 가입에 실패 했습니다.", false, form.getId());
             return ResponseEntity.internalServerError().body(rs);

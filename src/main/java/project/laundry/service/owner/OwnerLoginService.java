@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class OwnerLoginService {
-
-    private final CustomerRepository customerRepository;
     private final OwnerRepository ownerRepository;
 
     public ResponseEntity<ownerResponseStatus> authenticateOwnerLogin(loginForm form) {
@@ -55,6 +53,4 @@ public class OwnerLoginService {
 
         return rs;
     }
-
-
 }
