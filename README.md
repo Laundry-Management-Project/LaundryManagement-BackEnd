@@ -5,11 +5,14 @@
 > 또한 손님이 원하는 세탁소(사업장)에 예약을 등록하여 좀 더 편리하게 손님을 관리할 수 있도록 만들 계획입니다.
 
 ## 기술스택
-
 - Java 11
-- Spring boot, JPA, Spring Data Jpa
+- Spring boot, Spring Data Jpa
 - MariaDB
 - koyeb(PaaS)
+- Swagger(Rest API 문서화)
+- Junit5(테스트)
+
+### 프로젝트 관리
 - Notion 
   - https://uncovered-narcissus-6c4.notion.site/Laundry-Management-Project-dd55db33d45c45739d11b81f4a8e222d
 - Figma(미완성)
