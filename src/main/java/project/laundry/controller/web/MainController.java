@@ -12,9 +12,10 @@ import project.laundry.domain.dto.statistics.statisticsDto;
 import project.laundry.domain.dto.postDto;
 import project.laundry.service.PostService;
 import project.laundry.service.StatisticsService;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
-
+@ApiIgnore
 @RestController
 @RequestMapping("/")
 @RequiredArgsConstructor

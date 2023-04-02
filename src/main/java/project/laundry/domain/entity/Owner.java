@@ -32,7 +32,7 @@ public class Owner {
     private String phone;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
-    private List<Business> businesses = new ArrayList<>();
+    private final List<Business> businesses = new ArrayList<>();
 
 
 }

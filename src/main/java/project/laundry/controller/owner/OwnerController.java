@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/owner")
-public class BusinessController {
+public class OwnerController {
     private final OwnerBusinessService service;
 
     // 사용 X

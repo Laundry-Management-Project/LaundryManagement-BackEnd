@@ -6,15 +6,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.domain.dto.businessDto;
+import project.laundry.domain.dto.status.ownerResponseStatus;
 import project.laundry.domain.entity.Business;
 import project.laundry.domain.entity.Owner;
 import project.laundry.domain.form.businessForm;
+import project.laundry.exception.FormNullPointerException;
+import project.laundry.exception.UserNullPointerException;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.OwnerRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -29,21 +34,35 @@ public class OwnerBusinessService {
     @Transactional
     public ResponseEntity<businessDto> saveBusiness(businessForm form, String owner_uid) {
 
-        Optional<Owner> ownerOptional = ownerRepository.findById(owner_uid);
+        try {
 
-        if(ownerOptional.isPresent()) {
-            Owner owner = ownerOptional.get();
-            Business business = Business.builder()
-                    .name(form.getName())
-                    .address(form.getAddress())
-                    .bu_hour(form.getBu_hour())
-                    .owner(owner)
-                    .build();
-            businessRepository.save(business);
+            if(form == null || Stream.of(form.getName(), form.getAddress(), form.getBu_hour()).anyMatch(Objects::isNull)) {
+                throw new FormNullPointerException();
+            }
+            if(owner_uid == null) {
+                throw new UserNullPointerException();
+            }
 
-            businessDto businessDto = entityToDto(business);
+            Optional<Owner> ownerOptional = ownerRepository.findById(owner_uid);
 
-            return ResponseEntity.ok(businessDto);
+            if(ownerOptional.isPresent()) {
+                Owner owner = ownerOptional.get();
+                Business business = Business.builder()
+                        .name(form.getName())
+                        .address(form.getAddress())
+                        .bu_hour(form.getBu_hour())
+                        .owner(owner)
+                        .build();
+                businessRepository.save(business);
+
+                businessDto businessDto = entityToDto(business);
+
+                return ResponseEntity.ok(businessDto);
+            }
+        } catch (FormNullPointerException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (UserNullPointerException e) {
+            return ResponseEntity.internalServerError().body(null);
         }
 
         return ResponseEntity.internalServerError().body(null);
