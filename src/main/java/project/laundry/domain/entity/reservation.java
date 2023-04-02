@@ -3,10 +3,7 @@ package project.laundry.domain.entity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
@@ -20,4 +17,14 @@ public class reservation {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "re_id")
     private String id;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uid")
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bu_id")
+    private Business business;
+
 }

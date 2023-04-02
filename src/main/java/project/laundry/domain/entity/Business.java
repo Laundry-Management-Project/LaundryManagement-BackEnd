@@ -31,7 +31,7 @@ public class Business {
 
     // 사장님 uid
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ow_id")
+    @JoinColumn(name = "uid")
     private Owner owner;
 
 }

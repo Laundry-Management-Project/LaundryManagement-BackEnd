@@ -42,7 +42,7 @@ public class OwnerLoginService {
         List<Business> businesses = owner.getBusinesses();
 
         List<businessDto> businessDtos = businesses.stream().map(business -> businessDto.builder()
-                .id(business.getId())
+                .id(business.getUid())
                 .name(business.getName())
                 .address(business.getAddress())
                 .bu_hour(business.getBu_hour())

@@ -1,4 +1,4 @@
-package project.laundry.controller;
+package project.laundry.controller.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

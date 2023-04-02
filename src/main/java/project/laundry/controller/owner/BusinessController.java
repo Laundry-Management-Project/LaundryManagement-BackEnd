@@ -1,4 +1,4 @@
-package project.laundry.controller;
+package project.laundry.controller.owner;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,15 +8,18 @@ import project.laundry.domain.dto.businessDto;
 import project.laundry.domain.form.businessForm;
 import project.laundry.service.owner.OwnerBusinessService;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/owner")
 public class BusinessController {
     private final OwnerBusinessService service;
 
+    // 사용 X
     @GetMapping("/{uid}/businesses")
-    public ResponseEntity<String> BusinessesPage(@PathVariable("uid") String uid) {
-        return ResponseEntity.ok(uid);
+    public ResponseEntity<List<businessDto>> BusinessesPage(@PathVariable("uid") String uid) {
+        return service.findBusinessesByOwner_id(uid);
     }
 
 

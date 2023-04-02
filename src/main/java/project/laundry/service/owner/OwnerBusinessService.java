@@ -12,7 +12,9 @@ import project.laundry.domain.form.businessForm;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.OwnerRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,23 +49,20 @@ public class OwnerBusinessService {
         return ResponseEntity.internalServerError().body(null);
     }
 
-    public ResponseEntity<businessDto> findBusiness(String uid) {
-        Optional<Business> businessOptional = businessRepository.findById(uid);
+    public ResponseEntity<List<businessDto>> findBusinessesByOwner_id(String uid) {
 
-        if(businessOptional.isPresent()) {
-            Business business = businessOptional.get();
+        List<Business> businesses = businessRepository.findBusinessesByOwner_id(uid);
 
-            businessDto dto = businessDto.builder()
-                    .id(business.getUid())
-                    .name(business.getName())
-                    .address(business.getAddress())
-                    .bu_hour(business.getBu_hour())
-                    .build();
 
-            return ResponseEntity.ok(dto);
-        }
+        List<businessDto> collect = businesses.stream().map(business -> businessDto.builder()
+                .id(business.getUid())
+                .name(business.getName())
+                .address(business.getAddress())
+                .bu_hour(business.getBu_hour())
+                .build()).collect(Collectors.toList());
 
-        return ResponseEntity.badRequest().body(null);
+
+        return ResponseEntity.ok(collect);
     }
 
     private businessDto entityToDto(Business business) {
