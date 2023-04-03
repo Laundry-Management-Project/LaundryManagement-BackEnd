@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -27,5 +29,7 @@ public class Customer {
 
     private String phone;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<reservation> reservations = new ArrayList<>();
 
 }

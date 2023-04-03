@@ -18,6 +18,11 @@ public class reservation {
     @Column(name = "re_id")
     private String id;
 
+    private String cu_name;
+
+    private String bu_name;
+
+    private String bu_address;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")

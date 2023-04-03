@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.laundry.domain.dto.businessDto;
+import project.laundry.domain.dto.customerListDto;
 import project.laundry.domain.form.businessForm;
 import project.laundry.service.owner.OwnerBusinessService;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class OwnerController {
     private final OwnerBusinessService service;
 
     // 사용 X
+    @ApiIgnore
     @GetMapping("/{uid}/businesses")
     public ResponseEntity<List<businessDto>> BusinessesPage(@PathVariable("uid") String uid) {
         return service.findBusinessesByOwner_id(uid);
@@ -30,7 +33,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{uid}/businesses/{buId}/home")
-    public void businessDetailPage(@PathVariable("uid") String uid, @PathVariable("buId") String buId) {
-
+    public ResponseEntity<List<customerListDto>> businessDetailPage(@PathVariable("uid") String uid, @PathVariable("buId") String buId) {
+        return service.findCustomerListByBusiness_id(buId);
     }
 }

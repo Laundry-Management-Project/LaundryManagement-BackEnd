@@ -6,14 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.domain.dto.businessDto;
+import project.laundry.domain.dto.customerListDto;
 import project.laundry.domain.dto.status.ownerResponseStatus;
 import project.laundry.domain.entity.Business;
+import project.laundry.domain.entity.Customer;
 import project.laundry.domain.entity.Owner;
 import project.laundry.domain.form.businessForm;
 import project.laundry.exception.FormNullPointerException;
 import project.laundry.exception.UserNullPointerException;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.OwnerRepository;
+import project.laundry.repository.ReservationRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +33,8 @@ public class OwnerBusinessService {
     private final BusinessRepository businessRepository;
 
     private final OwnerRepository ownerRepository;
+
+    private final ReservationRepository reservationRepository;
 
     @Transactional
     public ResponseEntity<businessDto> saveBusiness(businessForm form, String owner_uid) {
@@ -83,6 +88,21 @@ public class OwnerBusinessService {
 
         return ResponseEntity.ok(collect);
     }
+
+    public ResponseEntity<List<customerListDto>> findCustomerListByBusiness_id(String business_id) {
+
+        List<Customer> customers = reservationRepository.findCustomerListByBusiness_id(business_id);
+
+        List<customerListDto> dto = customers.stream().map(customer -> customerListDto.builder()
+                .name(customer.getName())
+                .phone(customer.getPhone())
+                .build()).collect(Collectors.toList());
+
+        return ResponseEntity.ok(dto);
+    }
+
+
+
 
     private businessDto entityToDto(Business business) {
         return businessDto.builder()

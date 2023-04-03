@@ -28,7 +28,7 @@ public class signUpForm {
     @NotBlank
     private String phone;
 
-    @ApiModelProperty(value = "로그인 시 필요한 변수(사용X)", example = "CU", required = false)
+    @ApiModelProperty(value = "로그인 시 필요한 변수(사용X)", example = "OW", required = false)
     @NotBlank
     // 손님 - "CU", 사장 - "OW"
     private String userType;
