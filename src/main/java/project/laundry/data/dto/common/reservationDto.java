@@ -1,4 +1,4 @@
-package project.laundry.data.dto.customer;
+package project.laundry.data.dto.common;
 
 import lombok.*;
 
@@ -15,4 +15,11 @@ public class reservationDto {
     private String bu_name;
 
     private String bu_address;
+
+    private String clothCount;
+
+    private String clothStatus;
+
+    private String content;
+
 }

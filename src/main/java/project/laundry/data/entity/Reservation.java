@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter @Setter
-public class reservation {
+public class Reservation {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -19,12 +19,18 @@ public class reservation {
     @Column(name = "re_id")
     private String id;
 
+    private String cu_name;
+
+    private String bu_name;
+
     @Enumerated(EnumType.STRING)
     private ClothStatus clothStatus;
 
     private String clothCount;
 
     private String content;
+
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")

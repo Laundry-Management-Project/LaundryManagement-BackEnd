@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.dto.common.businessDto;
-import project.laundry.data.dto.owner.customerListDto;
+import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.entity.Business;
-import project.laundry.data.entity.Customer;
 import project.laundry.data.entity.Owner;
+import project.laundry.data.entity.Reservation;
 import project.laundry.data.form.businessForm;
 import project.laundry.exception.FormNullPointerException;
 import project.laundry.exception.UserNullPointerException;
@@ -72,32 +72,25 @@ public class OwnerBusinessService {
         return ResponseEntity.internalServerError().body(null);
     }
 
-    public ResponseEntity<List<businessDto>> findBusinessesByOwner_id(String uid) {
-
-        List<Business> businesses = businessRepository.findBusinessesByOwner_id(uid);
-
-
-        List<businessDto> collect = businesses.stream().map(business -> businessDto.builder()
-                .id(business.getUid())
-                .name(business.getName())
-                .address(business.getAddress())
-                .bu_hour(business.getBu_hour())
-                .build()).collect(Collectors.toList());
+    public ResponseEntity<List<reservationDto>> findReservationsByBusiness_id(String business_id) {
+        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_id(business_id);
 
 
-        return ResponseEntity.ok(collect);
-    }
-
-    public ResponseEntity<List<customerListDto>> findCustomerListByBusiness_id(String business_id) {
-
-        List<Customer> customers = reservationRepository.findCustomerListByBusiness_id(business_id);
-
-        List<customerListDto> dto = customers.stream().map(customer -> customerListDto.builder()
-                .name(customer.getName())
-                .phone(customer.getPhone())
-                .build()).collect(Collectors.toList());
+        List<reservationDto> dto = reservations.stream().map(reservation -> {
+            Business business = reservation.getBusiness();
+            return reservationDto.builder()
+                    .id(reservation.getId())
+                    .cu_name(reservation.getCu_name())
+                    .bu_name(business.getName())
+                    .bu_address(business.getAddress())
+                    .clothCount(reservation.getClothCount())
+                    .clothStatus(reservation.getClothStatus().getStatus())
+                    .content(reservation.getContent())
+                    .build();
+        }).collect(Collectors.toList());
 
         return ResponseEntity.ok(dto);
+
     }
 
 

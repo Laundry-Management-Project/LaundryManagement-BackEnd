@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.laundry.data.dto.common.businessDto;
-import project.laundry.data.dto.owner.customerListDto;
+import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.form.businessForm;
 import project.laundry.service.owner.OwnerBusinessService;
 import springfox.documentation.annotations.ApiIgnore;
@@ -18,14 +18,6 @@ import java.util.List;
 public class OwnerController {
     private final OwnerBusinessService service;
 
-    // 사용 X
-    @ApiIgnore
-    @GetMapping("/{uid}/businesses")
-    public ResponseEntity<List<businessDto>> BusinessesPage(@PathVariable("uid") String uid) {
-        return service.findBusinessesByOwner_id(uid);
-    }
-
-
     @PostMapping("/{uid}/businesses/add")
     public ResponseEntity<businessDto> businessAddPage(@RequestBody businessForm form, @PathVariable("uid") String owner_uid) {
 
@@ -33,7 +25,7 @@ public class OwnerController {
     }
 
     @GetMapping("/{uid}/businesses/{buId}/home")
-    public ResponseEntity<List<customerListDto>> businessDetailPage(@PathVariable("uid") String uid, @PathVariable("buId") String buId) {
-        return service.findCustomerListByBusiness_id(buId);
+    public ResponseEntity<List<reservationDto>> businessDetailPage(@PathVariable("buId") String buId, @PathVariable("uid") String uid) {
+        return service.findReservationsByBusiness_id(buId);
     }
 }

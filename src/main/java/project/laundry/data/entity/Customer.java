@@ -30,6 +30,6 @@ public class Customer {
     private String phone;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-    private List<reservation> reservations = new ArrayList<>();
+    private List<Reservation> Reservations = new ArrayList<>();
 
 }

@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.laundry.data.dto.customer.customerLoginDto;
+import project.laundry.data.dto.customer.customerSignUpDto;
 import project.laundry.data.form.signUpForm;
 import project.laundry.service.customer.CustomerSignUpService;
 
@@ -31,11 +32,11 @@ public class CustomerSignUpController {
     @ApiOperation(value = "손님 회원가입을 위한 메소드")
     @ApiImplicitParam(name = "form", value = "id, password, name, phone, userType(사용X)", dataType = "signUpForm")
     @PostMapping("/cu")
-    public ResponseEntity<customerLoginDto> customer_signUp(@RequestBody @Validated signUpForm form, BindingResult br) {
+    public ResponseEntity<customerSignUpDto> customer_signUp(@RequestBody @Validated signUpForm form, BindingResult br) {
 
         if(br.hasErrors()) {
             log.error(br.toString());
-            customerLoginDto rs = new customerLoginDto("잘못된 입력입니다.", false, null);
+            customerSignUpDto rs = new customerSignUpDto("잘못된 입력입니다.", false, null);
             return new ResponseEntity<>(rs, HttpStatus.BAD_REQUEST);
         }
 

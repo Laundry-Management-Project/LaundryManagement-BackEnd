@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import project.laundry.data.dto.customer.reservationDto;
+import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.dto.customer.customerLoginDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
-import project.laundry.data.entity.reservation;
+import project.laundry.data.entity.Reservation;
 import project.laundry.data.form.loginForm;
 import project.laundry.repository.CustomerRepository;
 
@@ -41,16 +41,19 @@ public class CustomerLoginService {
             return new customerLoginDto("가입되지 않은 사용자 입니다.", false, null);
         }
 
-        List<reservation> reservations = customer.getReservations();
+        List<Reservation> Reservations = customer.getReservations();
 
-        List<reservationDto> dto = reservations.stream().map(reservation -> {
-            Business business = reservation.getBusiness();
+        List<reservationDto> dto = Reservations.stream().map(Reservation -> {
+            Business business = Reservation.getBusiness();
 
             return reservationDto.builder()
-                    .id(reservation.getId())
+                    .id(Reservation.getId())
                     .cu_name(customer.getName())
                     .bu_name(business.getName())
                     .bu_address(business.getAddress())
+                    .clothStatus(Reservation.getClothStatus().getStatus())
+                    .clothCount(Reservation.getClothCount())
+                    .content(Reservation.getContent())
                     .build();
 
         }).collect(Collectors.toList());

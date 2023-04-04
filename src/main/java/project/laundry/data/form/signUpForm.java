@@ -15,13 +15,14 @@ public class signUpForm {
     @NotBlank
     private String id;
 
+    @ApiModelProperty(value = "사용자(손님, 사장님)의 이름 또는 닉네임", example = "홍길동, TestName", required = true)
+    @NotBlank
+    private String name;
+
     @ApiModelProperty(value = "로그인 시 필요한 password", example = "1234", required = true)
     @NotBlank
     private String password;
 
-    @ApiModelProperty(value = "사용자(손님, 사장님)의 이름 또는 닉네임", example = "홍길동, TestName", required = true)
-    @NotBlank
-    private String name;
 
     @ApiModelProperty(value = "사용자(손님, 사장님)의 핸드폰 번호", example = "010-1234-5678", required = true)
     @NotBlank

@@ -42,8 +42,8 @@ public class OwnerSignUpService {
                 return ResponseEntity.badRequest().body(rs);
             }
 
-            ownerSignUpDto rs = new ownerSignUpDto("회원 가입이 완료 되었습니다.", true, ownerEntity.getId());
-            ownerRepository.save(ownerEntity);
+            Owner owner = ownerRepository.save(ownerEntity);
+            ownerSignUpDto rs = new ownerSignUpDto("회원 가입이 완료 되었습니다.", true, owner.getId());
 
             return ResponseEntity.ok(rs);
 

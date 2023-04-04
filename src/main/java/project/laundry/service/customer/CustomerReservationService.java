@@ -5,10 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import project.laundry.data.dto.common.businessDto;
-import project.laundry.data.dto.customer.reservationDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
-import project.laundry.data.entity.reservation;
+import project.laundry.data.entity.Reservation;
 import project.laundry.data.entity.status.ClothStatus;
 import project.laundry.data.form.reservationForm;
 import project.laundry.repository.BusinessRepository;
@@ -27,11 +26,6 @@ public class CustomerReservationService {
     private final BusinessRepository businessRepository;
     private final CustomerRepository customerRepository;
 
-    public ResponseEntity<List<reservationDto>> findReservationByCustomerUid(String uid) {
-
-
-        return null;
-    }
 
     public ResponseEntity<List<businessDto>> findAllBusinesses() {
         List<Business> businesses = businessRepository.findAll();
@@ -47,17 +41,19 @@ public class CustomerReservationService {
     }
 
 
-    public ResponseEntity<String> saveReservation(reservationForm form, String uid) {
+    public ResponseEntity<String> saveReservation(reservationForm form) {
 
-        Customer customer = customerRepository.findByCustomer_id(uid);
+        Customer customer = customerRepository.findByCustomer_uid(form.getCu_id());
         Business business = businessRepository.findBusinessByBusiness_id(form.getBu_id());
 
-        reservation build = reservation.builder()
+        Reservation build = Reservation.builder()
+                .cu_name(customer.getName())
+                .bu_name(business.getName())
+                .clothStatus(ClothStatus.WASH_BEFORE)
+                .clothCount(form.getClothCount())
+                .content(form.getContent())
                 .customer(customer)
                 .business(business)
-                .clothCount(form.getClothCount())
-                .clothStatus(ClothStatus.WASH_BEFORE)
-                .content(form.getContent())
                 .build();
 
 
