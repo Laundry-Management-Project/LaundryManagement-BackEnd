@@ -43,12 +43,18 @@ public class CustomerLoginService {
 
         List<reservation> reservations = customer.getReservations();
 
-        List<reservationDto> dto = reservations.stream().map(reservation -> reservationDto.builder()
-                .id(reservation.getId())
-                .cu_name(customer.getName())
-                .bu_name(reservation.getBu_name())
-                .bu_address(reservation.getBu_address())
-                .build()).collect(Collectors.toList());
+        List<reservationDto> dto = reservations.stream().map(reservation -> {
+            Business business = reservation.getBusiness();
+
+            return reservationDto.builder()
+                    .id(reservation.getId())
+                    .cu_name(customer.getName())
+                    .bu_name(business.getName())
+                    .bu_address(business.getAddress())
+                    .build();
+
+        }).collect(Collectors.toList());
+
 
         customerResponseStatus rs = new customerResponseStatus("로그인이 완료되었습니다.", true, customer.getId());
         rs.setReservations(dto);

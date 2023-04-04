@@ -2,6 +2,7 @@ package project.laundry.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import project.laundry.domain.entity.status.ClothStatus;
 
 import javax.persistence.*;
 
@@ -18,11 +19,12 @@ public class reservation {
     @Column(name = "re_id")
     private String id;
 
-    private String cu_name;
+    @Enumerated(EnumType.STRING)
+    private ClothStatus clothStatus;
 
-    private String bu_name;
+    private String clothCount;
 
-    private String bu_address;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")

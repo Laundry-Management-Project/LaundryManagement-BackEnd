@@ -9,6 +9,7 @@ import project.laundry.domain.dto.reservationDto;
 import project.laundry.domain.entity.Business;
 import project.laundry.domain.entity.Customer;
 import project.laundry.domain.entity.reservation;
+import project.laundry.domain.entity.status.ClothStatus;
 import project.laundry.domain.form.reservationForm;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.CustomerRepository;
@@ -52,12 +53,13 @@ public class CustomerReservationService {
         Business business = businessRepository.findBusinessByBusiness_id(form.getBu_id());
 
         reservation build = reservation.builder()
-                .cu_name(customer.getName())
-                .bu_name(business.getName())
-                .bu_address(business.getAddress())
                 .customer(customer)
                 .business(business)
+                .clothCount(form.getClothCount())
+                .clothStatus(ClothStatus.WASH_BEFORE)
+                .content(form.getContent())
                 .build();
+
 
         reservationRepository.save(build);
 
