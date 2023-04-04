@@ -3,10 +3,7 @@ package project.laundry.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import project.laundry.domain.entity.Business;
-import project.laundry.domain.entity.Owner;
-
-import java.util.List;
+import project.laundry.data.entity.Owner;
 
 public interface OwnerRepository extends JpaRepository<Owner, String> {
 

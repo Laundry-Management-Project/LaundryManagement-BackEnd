@@ -7,11 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.laundry.domain.dto.statistics.revenueGraphDto;
-import project.laundry.domain.dto.statistics.statisticsDto;
-import project.laundry.domain.dto.postDto;
-import project.laundry.service.PostService;
-import project.laundry.service.StatisticsService;
+import project.laundry.data.dto.common.statistics.revenueGraphDto;
+import project.laundry.data.dto.common.statistics.statisticsDto;
+import project.laundry.data.dto.common.postDto;
+import project.laundry.service.web.PostService;
+import project.laundry.service.web.StatisticsService;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;

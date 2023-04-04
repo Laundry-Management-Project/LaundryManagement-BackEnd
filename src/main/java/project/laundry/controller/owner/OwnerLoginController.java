@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.laundry.domain.dto.status.ownerResponseStatus;
-import project.laundry.domain.form.loginForm;
+import project.laundry.data.dto.owner.ownerLoginDto;
+import project.laundry.data.form.loginForm;
 import project.laundry.service.owner.OwnerLoginService;
 
 @RestController
@@ -25,7 +25,7 @@ public class OwnerLoginController {
     }
 
     @PostMapping("/ow")
-    public ResponseEntity<ownerResponseStatus> owner_login(@RequestBody @Validated loginForm form, BindingResult br) {
+    public ResponseEntity<ownerLoginDto> owner_login(@RequestBody @Validated loginForm form, BindingResult br) {
 
         if(br.hasErrors()) {
             log.error(br.toString());

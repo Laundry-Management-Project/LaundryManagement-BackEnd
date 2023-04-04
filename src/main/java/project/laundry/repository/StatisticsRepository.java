@@ -3,7 +3,7 @@ package project.laundry.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import project.laundry.domain.entity.Visit;
+import project.laundry.data.entity.Visit;
 
 import java.time.LocalDate;
 

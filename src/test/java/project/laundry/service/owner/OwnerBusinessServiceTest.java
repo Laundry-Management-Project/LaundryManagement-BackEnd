@@ -1,19 +1,18 @@
 package project.laundry.service.owner;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.domain.dto.businessDto;
-import project.laundry.domain.entity.Owner;
-import project.laundry.domain.form.businessForm;
+import project.laundry.data.dto.common.businessDto;
+import project.laundry.data.entity.Owner;
+import project.laundry.data.form.businessForm;
 import project.laundry.repository.OwnerRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
 class OwnerBusinessServiceTest {

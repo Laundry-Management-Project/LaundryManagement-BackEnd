@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.laundry.domain.dto.status.customerResponseStatus;
-import project.laundry.domain.form.loginForm;
+import project.laundry.data.dto.customer.customerLoginDto;
+import project.laundry.data.form.loginForm;
 import project.laundry.service.customer.CustomerLoginService;
 
 @RestController
@@ -25,7 +25,7 @@ public class CustomerLoginController {
     }
 
     @PostMapping("/cu")
-    public ResponseEntity<customerResponseStatus> customer_login(@RequestBody @Validated loginForm form, BindingResult br) {
+    public ResponseEntity<customerLoginDto> customer_login(@RequestBody @Validated loginForm form, BindingResult br) {
 
         if(br.hasErrors()) {
             log.error(br.toString());

@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import project.laundry.domain.dto.businessDto;
-import project.laundry.domain.dto.customerListDto;
-import project.laundry.domain.form.businessForm;
+import project.laundry.data.dto.common.businessDto;
+import project.laundry.data.dto.owner.customerListDto;
+import project.laundry.data.form.businessForm;
 import project.laundry.service.owner.OwnerBusinessService;
 import springfox.documentation.annotations.ApiIgnore;
 

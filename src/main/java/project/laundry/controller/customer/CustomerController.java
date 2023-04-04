@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.laundry.domain.dto.businessDto;
-import project.laundry.domain.dto.reservationDto;
-import project.laundry.domain.form.reservationForm;
+import project.laundry.data.dto.common.businessDto;
+import project.laundry.data.dto.customer.reservationDto;
+import project.laundry.data.form.reservationForm;
 import project.laundry.service.customer.CustomerReservationService;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -36,7 +36,7 @@ public class CustomerController {
     public ResponseEntity<String> customerReservationAddPage(@RequestBody @Validated reservationForm form, BindingResult br, @PathVariable String uid) {
 
         if(br.hasErrors()) {
-            return null;
+            ResponseEntity.badRequest().body("올바르지 않은 양식입니다.");
         }
 
         return reservationService.saveReservation(form, uid);
