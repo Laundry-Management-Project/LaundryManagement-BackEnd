@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import project.laundry.data.dto.customer.customerLoginDto;
 import project.laundry.data.form.loginForm;
 import project.laundry.service.customer.CustomerLoginService;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/login")
@@ -18,6 +19,7 @@ public class CustomerLoginController {
 
     private final CustomerLoginService customerLoginService;
 
+    @ApiIgnore
     @GetMapping("/cu")
     public ResponseEntity<String> login() {
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import project.laundry.data.dto.owner.ownerLoginDto;
 import project.laundry.data.form.loginForm;
 import project.laundry.service.owner.OwnerLoginService;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/login")
@@ -18,6 +19,7 @@ public class OwnerLoginController {
 
     private final OwnerLoginService ownerLoginService;
 
+    @ApiIgnore
     @GetMapping("/ow")
     public ResponseEntity<String> login() {
 

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.dto.customer.customerLoginDto;
+import project.laundry.data.entity.Customer;
 import project.laundry.data.form.loginForm;
 import project.laundry.data.form.signUpForm;
 
@@ -23,6 +24,7 @@ class CustomerLoginServiceTest {
 
     @Test
     void authenticateCustomerLogin() {
+
         signUpForm form = new signUpForm();
         form.setId("test");
         form.setName("홍길동");

@@ -14,6 +14,7 @@ import project.laundry.data.dto.owner.ownerSignUpDto;
 import project.laundry.data.form.signUpForm;
 import project.laundry.service.customer.CustomerSignUpService;
 import project.laundry.service.owner.OwnerSignUpService;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/signup")
@@ -23,6 +24,7 @@ public class OwnerSignUpController {
 
     private final OwnerSignUpService ownerSignUpService;
 
+    @ApiIgnore
     @GetMapping("/ow")
     public ResponseEntity<String> signUp() {
 

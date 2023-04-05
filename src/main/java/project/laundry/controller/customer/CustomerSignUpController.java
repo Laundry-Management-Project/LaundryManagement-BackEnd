@@ -13,6 +13,7 @@ import project.laundry.data.dto.customer.customerLoginDto;
 import project.laundry.data.dto.customer.customerSignUpDto;
 import project.laundry.data.form.signUpForm;
 import project.laundry.service.customer.CustomerSignUpService;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/signup")
@@ -22,6 +23,7 @@ public class CustomerSignUpController {
 
     private final CustomerSignUpService customerSignUpService;
 
+    @ApiIgnore
     @GetMapping("/cu")
     public ResponseEntity<String> signUp() {
 
