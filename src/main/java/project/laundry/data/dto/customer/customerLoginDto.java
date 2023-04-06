@@ -2,6 +2,7 @@ package project.laundry.data.dto.customer;
 
 import lombok.Getter;
 import lombok.Setter;
+import project.laundry.data.dto.common.businessDto;
 import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.dto.responseStatus;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public class customerLoginDto extends responseStatus {
 
     List<reservationDto> reservations;
+
+    List<businessDto> businesses;
 
     public customerLoginDto(String message, boolean status, String uid) {
         super(message, status, uid);

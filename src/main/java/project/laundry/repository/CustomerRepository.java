@@ -5,11 +5,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import project.laundry.data.entity.Customer;
 
+import java.util.List;
+
 public interface CustomerRepository extends JpaRepository<Customer, String> {
 
     @Query("SELECT c FROM Customer c WHERE c.customer_id = :customer_id AND c.password = :password")
     Customer findByCustomer_idAndPassword(@Param("customer_id") String customer_id, @Param("password") String password);
 
-    @Query("SELECT c FROM Customer c WHERE c.id = :customer_uid")
-    Customer findByCustomer_uid(@Param("customer_uid") String customer_uid);
+    @Query("SELECT c FROM Customer c WHERE c.id = :uid")
+    Customer findByUid(@Param("uid") String uid);
+
+    @Query("SELECT c FROM Customer c WHERE c.customer_id = :customer_id")
+    Customer findByCustomer_id(@Param("customer_id") String customer_id);
 }

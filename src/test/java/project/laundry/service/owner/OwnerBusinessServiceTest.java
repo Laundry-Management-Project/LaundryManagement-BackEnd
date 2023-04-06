@@ -114,6 +114,5 @@ class OwnerBusinessServiceTest {
 
 
         System.out.println("response.getBody().size() = " + response.getBody().size());
-
     }
 }

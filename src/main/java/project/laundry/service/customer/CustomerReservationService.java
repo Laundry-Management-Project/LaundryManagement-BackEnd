@@ -41,9 +41,9 @@ public class CustomerReservationService {
     }
 
 
-    public ResponseEntity<String> saveReservation(reservationForm form) {
+    public ResponseEntity<String> saveReservation(reservationForm form, String cu_id) {
 
-        Customer customer = customerRepository.findByCustomer_uid(form.getCu_id());
+        Customer customer = customerRepository.findByUid(cu_id);
         Business business = businessRepository.findBusinessByBusiness_id(form.getBu_id());
 
         Reservation build = Reservation.builder()

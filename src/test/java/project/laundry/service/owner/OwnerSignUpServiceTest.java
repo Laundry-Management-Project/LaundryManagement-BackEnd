@@ -6,8 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.data.dto.owner.ownerLoginDto;
-import project.laundry.data.dto.owner.ownerSignUpDto;
+import project.laundry.data.dto.common.signUpDto;
 import project.laundry.data.entity.Owner;
 import project.laundry.data.form.signUpForm;
 import project.laundry.repository.OwnerRepository;
@@ -34,7 +33,7 @@ class OwnerSignUpServiceTest {
         s1.setPhone("010-1234-5678");
 
         // when
-        ResponseEntity<ownerSignUpDto> response = service.save(s1);
+        ResponseEntity<signUpDto> response = service.save(s1);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -61,7 +60,7 @@ class OwnerSignUpServiceTest {
 
         // when
         repository.save(owner);
-        ResponseEntity<ownerSignUpDto> response = service.save(s1);
+        ResponseEntity<signUpDto> response = service.save(s1);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -75,7 +74,7 @@ class OwnerSignUpServiceTest {
         // when
         signUpForm s1 = new signUpForm();
         s1.setId(null);
-        ResponseEntity<ownerSignUpDto> response = service.save(s1);
+        ResponseEntity<signUpDto> response = service.save(s1);
 
 
         // then

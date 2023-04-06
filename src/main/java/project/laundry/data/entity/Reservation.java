@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Getter @Setter
-public class Reservation {
+public class Reservation extends TimeEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -29,8 +29,6 @@ public class Reservation {
     private String clothCount;
 
     private String content;
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")

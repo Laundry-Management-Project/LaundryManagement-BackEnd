@@ -10,6 +10,8 @@ public class reservationDto {
 
     private String id;
 
+    private String bu_id;
+
     private String cu_name;
 
     private String bu_name;
@@ -22,4 +24,5 @@ public class reservationDto {
 
     private String content;
 
+    private String createdAt;
 }

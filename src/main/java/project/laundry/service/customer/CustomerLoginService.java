@@ -4,15 +4,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import project.laundry.data.dto.common.businessDto;
 import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.dto.customer.customerLoginDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
 import project.laundry.data.entity.Reservation;
 import project.laundry.data.form.loginForm;
+import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.CustomerRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,12 +25,14 @@ import java.util.stream.Collectors;
 public class CustomerLoginService {
 
     private final CustomerRepository customerRepository;
+    
+    private final BusinessRepository businessRepository;
 
     public ResponseEntity<customerLoginDto> authenticateCustomerLogin(loginForm form) {
 
         Customer customer = customerRepository.findByCustomer_idAndPassword(form.getId(), form.getPassword());
 
-        customerLoginDto rs = CreateCustomerLoginStatus(customer);
+        customerLoginDto rs = createCustomerLoginStatus(customer);
 
         if(!rs.getStatus()) {
             return ResponseEntity.badRequest().body(rs);
@@ -35,34 +41,53 @@ public class CustomerLoginService {
         return ResponseEntity.ok(rs);
     }
 
-    private customerLoginDto CreateCustomerLoginStatus(Customer customer) {
+    private customerLoginDto createCustomerLoginStatus(Customer customer) {
+        List<Business> businesses = businessRepository.findAll();
 
         if(customer == null) {
             return new customerLoginDto("가입되지 않은 사용자 입니다.", false, null);
         }
 
-        List<Reservation> Reservations = customer.getReservations();
+        // reservation null 체크
+        List<Reservation> reservations = Optional.ofNullable(customer.getReservations()).orElse(Collections.emptyList());
 
-        List<reservationDto> dto = Reservations.stream().map(Reservation -> {
-            Business business = Reservation.getBusiness();
 
-            return reservationDto.builder()
-                    .id(Reservation.getId())
-                    .cu_name(customer.getName())
-                    .bu_name(business.getName())
-                    .bu_address(business.getAddress())
-                    .clothStatus(Reservation.getClothStatus().getStatus())
-                    .clothCount(Reservation.getClothCount())
-                    .content(Reservation.getContent())
-                    .build();
+        // 해당 손님의 예약 목록 DTO Builder
+        List<reservationDto> reservationDto = reservations.stream().map(reservation -> buildReservationDto(customer, reservation)).collect(Collectors.toList());
 
-        }).collect(Collectors.toList());
-
+        // 모든 매장 목록 DTO Builder
+        List<businessDto> businessDto = businesses.stream().map(this::buildBusinessDto).collect(Collectors.toList());
 
         customerLoginDto rs = new customerLoginDto("로그인이 완료되었습니다.", true, customer.getId());
-        rs.setReservations(dto);
+        rs.setReservations(reservationDto);
+        rs.setBusinesses(businessDto);
 
         return rs;
     }
 
+    private reservationDto buildReservationDto(Customer customer, Reservation reservation) {
+        Business business = reservation.getBusiness();
+
+        return reservationDto.builder()
+                .id(reservation.getId())
+                .bu_id(business.getUid())
+                .cu_name(customer.getName())
+                .bu_name(business.getName())
+                .bu_address(business.getAddress())
+                .clothStatus(reservation.getClothStatus().getStatus())
+                .clothCount(reservation.getClothCount())
+                .content(reservation.getContent())
+                .createdAt(reservation.getCreateTime())
+                .build();
+    }
+
+    private businessDto buildBusinessDto(Business business) {
+
+        return businessDto.builder()
+                .id(business.getUid())
+                .name(business.getName())
+                .address(business.getAddress())
+                .bu_hour(business.getBu_hour())
+                .build();
+    }
 }

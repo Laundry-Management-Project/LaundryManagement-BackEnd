@@ -10,7 +10,7 @@ import java.util.List;
 public class ownerLoginDto extends responseStatus {
 
 
-    private List<businessDto> businessList;
+    private List<businessDto> businesses;
 
     public ownerLoginDto(String message, Boolean status, String uid) {
         super(message, status, uid);

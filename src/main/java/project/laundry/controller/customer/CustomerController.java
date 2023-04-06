@@ -24,13 +24,13 @@ public class CustomerController {
     }
 
     @PostMapping("/{uid}/reservation/add")
-    public ResponseEntity<String> customerReservationAddPage(@RequestBody @Validated reservationForm form, BindingResult br) {
+    public ResponseEntity<String> customerReservationAddPage(@RequestBody @Validated reservationForm form, BindingResult br, @PathVariable("uid") String uid) {
 
         if(br.hasErrors()) {
             ResponseEntity.badRequest().body("올바르지 않은 양식입니다.");
         }
 
-        return reservationService.saveReservation(form);
+        return reservationService.saveReservation(form, uid);
     }
 
 

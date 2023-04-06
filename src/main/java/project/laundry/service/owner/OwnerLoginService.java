@@ -41,12 +41,12 @@ public class OwnerLoginService {
             return ResponseEntity.ok(ownerLoginDto);
         } catch (FormNullPointerException e) {
             ownerLoginDto rs = new ownerLoginDto("올바르지 않은 양식입니다.", false, null);
-            rs.setBusinessList(null);
+            rs.setBusinesses(null);
 
             return ResponseEntity.badRequest().body(rs);
         } catch (UserNullPointerException e) {
             ownerLoginDto rs = new ownerLoginDto("가입되지 않은 사용자 입니다.", false, null);
-            rs.setBusinessList(null);
+            rs.setBusinesses(null);
 
             return ResponseEntity.badRequest().body(rs);
         }
@@ -68,7 +68,7 @@ public class OwnerLoginService {
                 .build()).collect(Collectors.toList());
 
         ownerLoginDto rs = new ownerLoginDto("로그인이 완료되었습니다.", true, owner.getId());
-        rs.setBusinessList(businessDtos);
+        rs.setBusinesses(businessDtos);
 
         return rs;
     }

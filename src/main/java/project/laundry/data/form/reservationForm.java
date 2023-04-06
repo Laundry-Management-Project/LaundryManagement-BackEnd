@@ -8,8 +8,6 @@ public class reservationForm {
 
     private String bu_id;
 
-   private String cu_id;
-
    private String clothCount;
 
    private String content;
