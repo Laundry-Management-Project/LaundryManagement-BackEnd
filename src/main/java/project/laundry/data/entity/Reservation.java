@@ -2,7 +2,8 @@ package project.laundry.data.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import project.laundry.data.entity.status.ClothStatus;
+import project.laundry.data.common.ClothStatus;
+import project.laundry.data.common.TimeEntity;
 
 import javax.persistence.*;
 
@@ -31,11 +32,11 @@ public class Reservation extends TimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uid")
+    @JoinColumn(name = "customer_uid")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bu_id")
+    @JoinColumn(name = "business_id")
     private Business business;
 
 }

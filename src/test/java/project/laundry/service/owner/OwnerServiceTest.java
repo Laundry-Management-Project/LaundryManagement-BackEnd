@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class OwnerBusinessServiceTest {
+class OwnerServiceTest {
 
     @Autowired
     OwnerRepository ownerRepository;
 
     @Autowired
-    OwnerBusinessService service;
+    OwnerService service;
 
     @Test
     void saveBusiness() {

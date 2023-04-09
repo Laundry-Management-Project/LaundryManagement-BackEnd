@@ -18,7 +18,8 @@ import static org.assertj.core.api.Assertions.*;
 class OwnerSignUpServiceTest {
 
 
-    @Autowired OwnerSignUpService service;
+    @Autowired
+    OwnerSignUpService service;
 
     @Autowired OwnerRepository repository;
 

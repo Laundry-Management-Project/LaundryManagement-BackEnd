@@ -1,9 +1,6 @@
 package project.laundry.data.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,13 +10,13 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Getter @Setter
 public class Business {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "bu_id")
+    @Column(name = "business_id")
     private String uid;
 
     private String name;
@@ -31,7 +28,7 @@ public class Business {
 
     // 사장님 uid
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uid")
+    @JoinColumn(name = "owner_uid")
     private Owner owner;
 
 }

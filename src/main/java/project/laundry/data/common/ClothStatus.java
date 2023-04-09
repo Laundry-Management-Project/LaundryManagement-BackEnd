@@ -1,4 +1,4 @@
-package project.laundry.data.entity.status;
+package project.laundry.data.common;
 
 public enum ClothStatus {
     WASH_BEFORE("세탁 전"),
@@ -14,5 +14,4 @@ public enum ClothStatus {
     public String getStatus() {
         return status;
     }
-
 }

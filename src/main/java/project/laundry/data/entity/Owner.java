@@ -18,7 +18,7 @@ public class Owner {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "uid")
+    @Column(name = "owner_uid")
     private String id;
 
     @Column(name = "owner_id")

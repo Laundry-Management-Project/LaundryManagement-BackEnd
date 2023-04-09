@@ -1,4 +1,4 @@
-package project.laundry.data.entity;
+package project.laundry.data.common;
 
 import javax.persistence.*;
 import lombok.Getter;

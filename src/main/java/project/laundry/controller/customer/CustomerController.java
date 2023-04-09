@@ -2,12 +2,11 @@ package project.laundry.controller.customer;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import project.laundry.data.dto.common.businessDto;
 import project.laundry.data.form.reservationForm;
-import project.laundry.service.customer.CustomerReservationService;
+import project.laundry.data.dto.common.businessDto;
+import project.laundry.service.customer.CustomerService;
 
 import java.util.List;
 
@@ -16,21 +15,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerReservationService reservationService;
+    private final CustomerService customerService;
 
     @GetMapping("/{uid}/reservation/add")
-    public ResponseEntity<List<businessDto>> customerReservationPage(@PathVariable String uid) {
-        return reservationService.findAllBusinesses();
+    public ResponseEntity<List<businessDto>> ReservationsPage(@PathVariable String uid) {
+        return customerService.findAllBusinesses();
     }
 
-    @PostMapping("/{uid}/reservation/add")
-    public ResponseEntity<String> customerReservationAddPage(@RequestBody @Validated reservationForm form, BindingResult br, @PathVariable("uid") String uid) {
+    @GetMapping("/{uid}/reservation/{bu_id}")
+    public ResponseEntity<businessDto> ReservationBusinessDetail(@PathVariable("bu_id") String bu_id, @PathVariable String uid) {
+        return customerService.findBusiness(bu_id);
+    }
 
-        if(br.hasErrors()) {
-            ResponseEntity.badRequest().body("올바르지 않은 양식입니다.");
-        }
+    @PostMapping("/{uid}/reservation/{bu_id}/add")
+    public ResponseEntity<String> ReservationAddPage(@RequestBody @Validated reservationForm form, @PathVariable("uid") String uid) {
 
-        return reservationService.saveReservation(form, uid);
+        return customerService.saveReservation(form, uid);
     }
 
 

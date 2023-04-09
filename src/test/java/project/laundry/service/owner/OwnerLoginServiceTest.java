@@ -17,7 +17,8 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 class OwnerLoginServiceTest {
 
-    @Autowired OwnerLoginService service;
+    @Autowired
+    OwnerLoginService service;
     @Autowired
     OwnerRepository ownerRepository;
 

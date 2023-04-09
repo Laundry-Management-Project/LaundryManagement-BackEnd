@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import project.laundry.data.entity.Reservation;
 import project.laundry.data.dto.common.businessDto;
 import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.dto.customer.customerLoginDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
-import project.laundry.data.entity.Reservation;
 import project.laundry.data.form.loginForm;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.CustomerRepository;
@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class CustomerLoginService {
 
     private final CustomerRepository customerRepository;
-    
     private final BusinessRepository businessRepository;
 
     public ResponseEntity<customerLoginDto> authenticateCustomerLogin(loginForm form) {
@@ -34,11 +33,7 @@ public class CustomerLoginService {
 
         customerLoginDto rs = createCustomerLoginStatus(customer);
 
-        if(!rs.getStatus()) {
-            return ResponseEntity.badRequest().body(rs);
-        }
-
-        return ResponseEntity.ok(rs);
+        return rs.getStatus() ? ResponseEntity.ok(rs) : ResponseEntity.badRequest().body(rs);
     }
 
     private customerLoginDto createCustomerLoginStatus(Customer customer) {
@@ -50,7 +45,6 @@ public class CustomerLoginService {
 
         // reservation null 체크
         List<Reservation> reservations = Optional.ofNullable(customer.getReservations()).orElse(Collections.emptyList());
-
 
         // 해당 손님의 예약 목록 DTO Builder
         List<reservationDto> reservationDto = reservations.stream().map(reservation -> buildReservationDto(customer, reservation)).collect(Collectors.toList());

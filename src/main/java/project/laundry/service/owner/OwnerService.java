@@ -5,12 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.data.dto.common.businessDto;
-import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Owner;
 import project.laundry.data.entity.Reservation;
 import project.laundry.data.form.businessForm;
+import project.laundry.data.dto.common.businessDto;
+import project.laundry.data.dto.common.reservationDto;
+import project.laundry.exception.EntityNotFoundException;
 import project.laundry.exception.FormNullPointerException;
 import project.laundry.exception.UserNullPointerException;
 import project.laundry.repository.BusinessRepository;
@@ -27,7 +28,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class OwnerBusinessService {
+public class OwnerService {
 
     private final BusinessRepository businessRepository;
 
@@ -75,26 +76,43 @@ public class OwnerBusinessService {
     public ResponseEntity<List<reservationDto>> findReservationsByBusiness_id(String business_id) {
         List<Reservation> reservations = reservationRepository.findReservationsByBusiness_id(business_id);
 
-
         List<reservationDto> dto = reservations.stream().map(reservation -> {
             Business business = reservation.getBusiness();
             return reservationDto.builder()
                     .id(reservation.getId())
+                    .bu_id(business.getUid())
                     .cu_name(reservation.getCu_name())
                     .bu_name(business.getName())
                     .bu_address(business.getAddress())
                     .clothCount(reservation.getClothCount())
                     .clothStatus(reservation.getClothStatus().getStatus())
                     .content(reservation.getContent())
+                    .createdAt(reservation.getCreateTime())
                     .build();
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(dto);
-
     }
 
+    @Transactional
+    public ResponseEntity<businessDto> updateBusiness(businessForm form, String buId, String uid) {
+        Business business = businessRepository.findBusinessByBusiness_id(buId).orElseThrow(EntityNotFoundException::new);
+        Owner owner = ownerRepository.findById(uid).orElseThrow(EntityNotFoundException::new);
 
+        Business build = Business.builder()
+                .uid(business.getUid())
+                .name(form.getName())
+                .address(form.getAddress())
+                .bu_hour(form.getBu_hour())
+                .owner(owner)
+                .build();
 
+        Business savedBusiness = businessRepository.save(build);
+
+        businessDto businessDto = entityToDto(savedBusiness);
+
+        return ResponseEntity.ok(businessDto);
+    }
 
     private businessDto entityToDto(Business business) {
         return businessDto.builder()

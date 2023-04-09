@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import project.laundry.data.entity.Business;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BusinessRepository extends JpaRepository<Business, String> {
 
@@ -13,5 +14,5 @@ public interface BusinessRepository extends JpaRepository<Business, String> {
     List<Business> findBusinessesByOwner_id(@Param("owner_id") String owner_id);
 
     @Query("SELECT b FROM Business b WHERE b.uid = :bu_id")
-    Business findBusinessByBusiness_id(@Param("bu_id") String bu_id);
+    Optional<Business> findBusinessByBusiness_id(@Param("bu_id") String bu_id);
 }

@@ -15,7 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class CustomerSignUpServiceTest {
 
-    @Autowired CustomerSignUpService service;
+    @Autowired
+    CustomerSignUpService service;
 
     @Test
     void save() {

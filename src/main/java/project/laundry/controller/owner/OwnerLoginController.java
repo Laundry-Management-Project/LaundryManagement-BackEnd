@@ -1,10 +1,10 @@
 package project.laundry.controller.owner;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.laundry.data.dto.owner.ownerLoginDto;
 import project.laundry.data.form.loginForm;
@@ -26,13 +26,10 @@ public class OwnerLoginController {
         return ResponseEntity.ok("ok");
     }
 
+    @ApiOperation(value = "손님 회원가입을 위한 메소드")
+    @ApiImplicitParam(name = "loginForm", value = "id, password", dataType = "Object")
     @PostMapping("/ow")
-    public ResponseEntity<ownerLoginDto> owner_login(@RequestBody @Validated loginForm form, BindingResult br) {
-
-        if(br.hasErrors()) {
-            log.error(br.toString());
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<ownerLoginDto> owner_login(@RequestBody loginForm form) {
 
         return ownerLoginService.authenticateOwnerLogin(form);
 
