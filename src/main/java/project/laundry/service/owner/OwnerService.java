@@ -74,7 +74,7 @@ public class OwnerService {
     }
 
     public ResponseEntity<List<reservationDto>> findReservationsByBusiness_id(String business_id) {
-        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_id(business_id);
+        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(business_id);
 
         List<reservationDto> dto = reservations.stream().map(reservation -> {
             Business business = reservation.getBusiness();
@@ -98,8 +98,10 @@ public class OwnerService {
     public ResponseEntity<businessDto> updateBusiness(businessForm form, String buId, String uid) {
         Business business = businessRepository.findBusinessByBusiness_id(buId).orElseThrow(EntityNotFoundException::new);
         Owner owner = ownerRepository.findById(uid).orElseThrow(EntityNotFoundException::new);
+        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(buId);
 
-        Business build = Business.builder()
+
+        Business updatedBusiness = Business.builder()
                 .uid(business.getUid())
                 .name(form.getName())
                 .address(form.getAddress())
@@ -107,7 +109,15 @@ public class OwnerService {
                 .owner(owner)
                 .build();
 
-        Business savedBusiness = businessRepository.save(build);
+        // update 문제 있음
+        reservations.forEach(reservation -> {
+            reservation.setBu_name(updatedBusiness.getName());
+            reservation.setBusiness(updatedBusiness);
+        });
+
+
+        Business savedBusiness = businessRepository.save(updatedBusiness);
+
 
         businessDto businessDto = entityToDto(savedBusiness);
 

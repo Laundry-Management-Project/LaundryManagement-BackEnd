@@ -22,7 +22,7 @@ public class OwnerController {
 
     @ApiOperation(value = "사업장(세탁소)를 등록하기 위한 메소드")
     @PostMapping("/{uid}/business/add")
-    public ResponseEntity<businessDto> businessAddPage(@ApiParam(name = "businessForm", value = "name, address, bu_hour", required = true) @RequestBody businessForm form,
+    public ResponseEntity<businessDto> businessAdd(@ApiParam(name = "businessForm", value = "name, address, bu_hour", required = true) @RequestBody businessForm form,
                                                        @ApiParam(name = "uid", value = "사장님 고유 uid", required = true) @PathVariable("uid") String owner_uid) {
 
         return service.saveBusiness(form, owner_uid);
@@ -30,7 +30,7 @@ public class OwnerController {
 
     @ApiOperation(value = "사업장 상세화면")
     @GetMapping("/{uid}/business/detail/{buId}")
-    public ResponseEntity<List<reservationDto>> businessDetailPage(
+    public ResponseEntity<List<reservationDto>> businessDetail(
             @ApiParam(name = "buId", value = "사업장 고유 uid", required = true) @PathVariable("buId") String buId,
             @ApiParam(name = "uid", value = "사장님 고유 uid") @PathVariable("uid") String uid) {
         return service.findReservationsByBusiness_id(buId);

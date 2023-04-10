@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import project.laundry.data.common.ClothStatus;
 import project.laundry.data.dto.common.businessDto;
+import project.laundry.data.dto.common.reservationDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
 import project.laundry.data.entity.Reservation;
@@ -42,6 +43,28 @@ public class CustomerService {
                 .build()).collect(Collectors.toList());
 
         return ResponseEntity.ok(businessDtos);
+    }
+
+    public ResponseEntity<List<reservationDto>> findReservations(String uid) {
+        List<Reservation> reservations = reservationRepository.findReservationsByCustomer_uid(uid);
+
+        List<reservationDto> collect = reservations.stream().map(reservation -> {
+            Business business = reservation.getBusiness();
+            Customer customer = reservation.getCustomer();
+            return reservationDto.builder()
+                    .id(reservation.getId())
+                    .bu_id(business.getUid())
+                    .cu_name(customer.getName())
+                    .bu_name(business.getName())
+                    .bu_address(business.getAddress())
+                    .clothStatus(reservation.getClothStatus().getStatus())
+                    .clothCount(reservation.getClothCount())
+                    .content(reservation.getContent())
+                    .createdAt(reservation.getCreateTime())
+                    .build();
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(collect);
     }
 
 

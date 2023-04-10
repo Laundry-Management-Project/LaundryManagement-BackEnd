@@ -18,7 +18,7 @@ public class Customer {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "customer_uid")
-    private String id;
+    private String uid;
 
     @Column(name = "customer_id")
     private String customer_id;

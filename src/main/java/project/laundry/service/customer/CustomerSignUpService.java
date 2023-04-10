@@ -33,7 +33,7 @@ public class CustomerSignUpService implements SignUpService {
 
         Customer customerEntity = buildCustomerEntity(form);
         Customer customer = customerRepository.save(customerEntity);
-        signUpDto rs = new signUpDto("회원 가입이 완료 되었습니다.", true, customer.getId());
+        signUpDto rs = new signUpDto("회원 가입이 완료 되었습니다.", true, customer.getUid());
         return ResponseEntity.ok(rs);
     }
 

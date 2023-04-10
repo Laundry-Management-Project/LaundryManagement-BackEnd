@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // 사업징
 @Entity
@@ -30,5 +32,8 @@ public class Business {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_uid")
     private Owner owner;
+
+    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
 }
