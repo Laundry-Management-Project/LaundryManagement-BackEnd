@@ -27,7 +27,7 @@ public class OwnerLoginController {
     }
 
     @ApiOperation(value = "손님 회원가입을 위한 메소드")
-    @ApiImplicitParam(name = "loginForm", value = "id, password", dataType = "Object")
+    @ApiImplicitParam(name = "form", value = "id, password", dataType = "loginForm")
     @PostMapping("/ow")
     public ResponseEntity<ownerLoginDto> owner_login(@RequestBody loginForm form) {
 

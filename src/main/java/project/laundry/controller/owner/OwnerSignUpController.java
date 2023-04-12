@@ -27,7 +27,7 @@ public class OwnerSignUpController {
     }
 
     @ApiOperation(value = "사장님 회원가입을 위한 메소드")
-    @ApiImplicitParam(name = "signUpForm", value = "id, password, name, phone, userType(사용X)", dataType = "Object")
+    @ApiImplicitParam(name = "form", value = "id, password, name, phone, userType(사용X)", dataType = "signUpForm")
     @PostMapping("/ow")
     public ResponseEntity<signUpDto> owner_signup(@RequestBody signUpForm form) {
         return ownerSignUpService.save(form);

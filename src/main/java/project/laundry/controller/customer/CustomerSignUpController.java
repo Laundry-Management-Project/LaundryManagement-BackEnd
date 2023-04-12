@@ -28,7 +28,7 @@ public class CustomerSignUpController {
 
 
     @ApiOperation(value = "손님 회원가입을 위한 메소드")
-    @ApiImplicitParam(name = "signUpForm", value = "id, password, name, phone, userType(사용X)", dataType = "Object")
+    @ApiImplicitParam(name = "form", value = "id, password, name, phone, userType(사용X)", dataType = "signUpForm")
     @PostMapping("/cu")
     public ResponseEntity<signUpDto> customer_signUp(@RequestBody signUpForm form) {
 
