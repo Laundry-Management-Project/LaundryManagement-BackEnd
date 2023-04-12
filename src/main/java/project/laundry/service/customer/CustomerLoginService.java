@@ -47,7 +47,6 @@ public class CustomerLoginService {
 
         // reservation null 체크
         List<Reservation> reservations = Optional.ofNullable(customer.getReservations()).orElse(Collections.emptyList());
-        log.info("reservations.get(1).getBu_name() :  {}", reservations.get(1).getBu_name());
 
         // 지연 로딩(LAZY)이므로 쿼리가 1번 나간다.
         // 해당 손님의 예약 목록 DTO Builder
