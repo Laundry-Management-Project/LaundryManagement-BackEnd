@@ -1,11 +1,11 @@
-package project.laundry.data.dto.common;
+package project.laundry.data.dao.common;
 
 import lombok.*;
 
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class signUpDto {
+public class signUpDao {
 
     private String message;
 

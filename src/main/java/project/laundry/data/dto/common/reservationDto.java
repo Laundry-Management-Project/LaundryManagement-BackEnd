@@ -1,4 +1,4 @@
-package project.laundry.data.dto.common;
+package project.laundry.data.dao.common;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class reservationDto {
+public class reservationDao {
 
     @ApiModelProperty(value = "예약 고유 id", example = "0d45abec-134c-49ee-ac3c-09d7d211a21a", required = true)
     private String id;

@@ -1,4 +1,4 @@
-package project.laundry.data.form;
+package project.laundry.data.dto;
 
 import lombok.Getter;
 import lombok.Setter;

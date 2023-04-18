@@ -1,4 +1,4 @@
-package project.laundry.data.dto;
+package project.laundry.data.dao;
 
 import lombok.*;
 

@@ -1,8 +1,8 @@
-package project.laundry.data.dto.owner;
+package project.laundry.data.dao.owner;
 
 import lombok.*;
-import project.laundry.data.dto.common.businessDto;
-import project.laundry.data.dto.responseStatus;
+import project.laundry.data.dao.common.businessDao;
+import project.laundry.data.dao.responseStatus;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class ownerLoginDto extends responseStatus {
 
 
-    private List<businessDto> businesses;
+    private List<businessDao> businesses;
 
     public ownerLoginDto(String message, Boolean status, String uid) {
         super(message, status, uid);

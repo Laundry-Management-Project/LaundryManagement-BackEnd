@@ -1,6 +1,5 @@
 # 세탁소 장부 관리 프로젝트
 
-> 웹으로 시작한 스프링 프로젝트입니다.
 > 수기로 작성하는 세탁소 장부를 앱으로 만들어서 세탁소 사장님들의 고충을 덜어주고 싶어 시작한 프로젝트입니다.
 > 또한 손님이 원하는 세탁소(사업장)에 예약을 등록하여 좀 더 편리하게 손님을 관리할 수 있도록 만들 계획입니다.
 
@@ -18,8 +17,10 @@
 - Figma(미완성)
   - https://www.figma.com/file/6PB4jbroiI7WXGBDYciCVd/Untitled?node-id=0%3A1&t=IXcFJxTJr1FCTlOt-1
 
+<br>
 
-> <strike> 현재 웹에서 진행하던 프로젝트를 안드로이드로 변경하여 진행 중 </strike>
+> <strike> 현재 웹에서 진행하던 프로젝트를 안드로이드로 변경하여 진행 중 입니다. 아래 링크는 웹으로 개발한 코드를 보실 수 있습니다.</strike><br>
+> https://github.com/Yu-YoungWoo/LaundryManagement
 
 ### 메인화면
 <img src="/IMG/home.png"  width="700" height="370">

@@ -1,21 +1,21 @@
-package project.laundry.data.dto.customer;
+package project.laundry.data.dao.customer;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.laundry.data.dto.common.businessDto;
-import project.laundry.data.dto.common.reservationDto;
-import project.laundry.data.dto.responseStatus;
+import project.laundry.data.dao.common.businessDao;
+import project.laundry.data.dao.common.reservationDao;
+import project.laundry.data.dao.responseStatus;
 
 import java.util.List;
 
 @Getter @Setter
-public class customerLoginDto extends responseStatus {
+public class customerLoginDao extends responseStatus {
 
-    List<reservationDto> reservations;
+    List<reservationDao> reservations;
 
-    List<businessDto> businesses;
+    List<businessDao> businesses;
 
-    public customerLoginDto(String message, boolean status, String uid) {
+    public customerLoginDao(String message, boolean status, String uid) {
         super(message, status, uid);
     }
 }
