@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
-import project.laundry.data.form.signUpForm;
+import project.laundry.data.request.signUpForm;
 import project.laundry.exception.DataIntegrityViolationException;
 import project.laundry.exception.FormNullPointerException;
 import project.laundry.exception.UserNullPointerException;

@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import project.laundry.AOP.Handler.signup.SignupExceptionHandlerAdvice;
 import project.laundry.exception.DuplicateUserException;
 import project.laundry.exception.EntityNotFoundException;
 import project.laundry.exception.FormNullPointerException;
@@ -17,33 +18,30 @@ import project.laundry.exception.FormNullPointerException;
 @RequiredArgsConstructor
 public class ExceptionHandlerAspect {
 
-    private final ExceptionHandlerAdvice advice;
+    private final SignupExceptionHandlerAdvice advice;
     @Pointcut("execution(* project.laundry.service.*.*(..))")
     public void serviceLayer(){}
 
-    @Pointcut("execution(* project.laundry.controller.*.*(..))")
+    @Pointcut("execution(* project.laundry.controller.*.*(..)) && execution(* project.laundry.controller.LoginController.*(..))")
     public void controllerLayer() {}
 
     @Around("serviceLayer()")
     public Object serviceHandleException(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-            joinPoint.proceed();
+            return joinPoint.proceed();
         } catch (DuplicateUserException e) {
-            advice.handleDuplicateUserException(e);
+            return advice.handleDuplicateUserException(e);
         } catch (EntityNotFoundException e) {
-            advice.handleEntityNotFoundException(e);
+            return advice.handleEntityNotFoundException(e);
         }
-        return null;
     }
 
     @Around("controllerLayer()")
     public Object controllerHandlerException(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-            joinPoint.proceed();
+            return joinPoint.proceed();
         } catch (FormNullPointerException e) {
-            advice.handleFormNullPointerException(e);
+            return advice.handleFormNullPointerException(e);
         }
-
-        return null;
     }
 }

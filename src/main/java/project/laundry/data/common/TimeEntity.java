@@ -30,6 +30,11 @@ public abstract class TimeEntity {
         this.updateTime = this.createTime;
     }
 
+    @PostUpdate
+    public void postUpdate() {
+        this.createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+    }
+
     @PreUpdate
     public void onPreUpdate() {
         this.updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface BusinessRepository extends JpaRepository<Business, String> {
 
-    @Query("SELECT b FROM Business b JOIN FETCH b.owner WHERE b.owner.id = :owner_id")
+    @Query("SELECT b FROM Business b JOIN FETCH b.owner WHERE b.owner.uid = :owner_id")
     List<Business> findBusinessesByOwner_id(@Param("owner_id") String owner_id);
 
     @Query("SELECT b FROM Business b WHERE b.uid = :bu_id")

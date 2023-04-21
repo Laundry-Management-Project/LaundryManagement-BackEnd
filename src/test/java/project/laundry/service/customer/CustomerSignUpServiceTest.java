@@ -6,8 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.data.dto.common.signUpDto;
-import project.laundry.data.form.signUpForm;
+import project.laundry.data.response.common.SignupDto;
+import project.laundry.data.request.signUpForm;
+import project.laundry.service.common.Signup.CustomerSignUpService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +27,7 @@ class CustomerSignUpServiceTest {
         form.setPassword("1234");
         form.setPhone("010-1234-5678");
 
-        ResponseEntity<signUpDto> response = service.save(form);
+        ResponseEntity<SignupDto> response = service.save(form);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().getStatus()).isTrue();

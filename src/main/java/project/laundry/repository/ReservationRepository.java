@@ -16,4 +16,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
     @Query("SELECT r FROM Reservation r JOIN FETCH r.customer WHERE r.customer.uid = :customer_id")
     List<Reservation> findReservationsByCustomer_uid(@Param("customer_id") String customer_id);
 
+    @Query("SELECT SUM(r.price) FROM Reservation r WHERE r.clothStatus = 'WASH_COMPLETE'")
+    Long findTotalPriceByClothStatusIsWashComplete();
 }

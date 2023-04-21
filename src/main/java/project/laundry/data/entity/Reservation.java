@@ -2,6 +2,7 @@ package project.laundry.data.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.lang.Nullable;
 import project.laundry.data.common.ClothStatus;
 import project.laundry.data.common.TimeEntity;
 
@@ -20,16 +21,15 @@ public class Reservation extends TimeEntity {
     @Column(name = "re_id")
     private String id;
 
-    private String cu_name;
-
-    private String bu_name;
-
     @Enumerated(EnumType.STRING)
     private ClothStatus clothStatus;
 
-    private String clothCount;
+    private String request_detail;
 
-    private String content;
+    private String clothing_type;
+
+    @Column(nullable = false)
+    private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_uid")

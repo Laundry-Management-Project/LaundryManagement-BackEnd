@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// 사업징
 @Entity
 @Builder
 @AllArgsConstructor
@@ -28,12 +27,16 @@ public class Business {
     // 영업시간  -> 07:00 ~ 17:00
     private String bu_hour;
 
+    private String contact;
+
+    private String intro;
+
     // 사장님 uid
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_uid")
     private Owner owner;
 
-    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
 }

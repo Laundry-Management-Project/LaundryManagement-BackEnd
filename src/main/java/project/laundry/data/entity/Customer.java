@@ -29,7 +29,7 @@ public class Customer {
 
     private String phone;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Reservation> Reservations = new ArrayList<>();
 
 }
