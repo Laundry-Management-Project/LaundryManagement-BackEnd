@@ -2,7 +2,6 @@ package project.laundry.data.entity;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.Nullable;
 import project.laundry.data.common.ClothStatus;
 import project.laundry.data.common.TimeEntity;
 
@@ -22,7 +21,7 @@ public class Reservation extends TimeEntity {
     private String id;
 
     @Enumerated(EnumType.STRING)
-    private ClothStatus clothStatus;
+    private ClothStatus cloth_status;
 
     private String request_detail;
 

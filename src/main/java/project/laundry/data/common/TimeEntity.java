@@ -28,15 +28,20 @@ public abstract class TimeEntity {
     public void prePersist() {
         this.createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
         this.updateTime = this.createTime;
+//        this.createTime = LocalDateTime.now();
+//        this.updateTime = createTime;
     }
 
     @PostUpdate
     public void postUpdate() {
         this.createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+//        this.createTime = LocalDateTime.now();
     }
 
     @PreUpdate
     public void onPreUpdate() {
         this.updateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+//        this.updateTime = LocalDateTime.now();
+
     }
 }

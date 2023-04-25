@@ -29,7 +29,9 @@ public class Customer {
 
     private String phone;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private String role;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Reservation> Reservations = new ArrayList<>();
 
 }

@@ -36,7 +36,7 @@ public class Business {
     @JoinColumn(name = "owner_uid")
     private Owner owner;
 
-    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();
 
 }

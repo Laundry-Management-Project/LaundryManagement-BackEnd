@@ -38,10 +38,5 @@ public class SignupExceptionHandlerAdvice {
         return ResponseEntity.badRequest().body(rs);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException e) {
-
-        return ResponseEntity.internalServerError().body(null);
-    }
 
 }

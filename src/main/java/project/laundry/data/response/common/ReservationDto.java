@@ -3,6 +3,7 @@ package project.laundry.data.response.common;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import project.laundry.data.common.ClothStatus;
 
 @ApiModel(value = "예약 응답 데이터")
 @Getter @Setter
@@ -32,14 +33,14 @@ public class ReservationDto {
     @ApiModelProperty(value = "손님 전화번호", example = "010-7853-4398", required = true)
     private String cu_phone;
 
-    @ApiModelProperty(value = "사장 전화번호", example = "010-7853-4398", required = true)
+    @ApiModelProperty(value = "세탁소 전화번호", example = "010-7853-4398", required = true)
     private String contact;
 
     @ApiModelProperty(value = "세탁물 종류", example = "흰색 반팔티, 검정색 패", required = true)
     private String clothing_type;
 
     @ApiModelProperty(value = "세탁 상태", example = "세탁 전", required = true)
-    private String cloth_status;
+    private ClothStatus cloth_status;
 
     @ApiModelProperty(value = "세탁물 가격", example = "0", required = true)
     private Integer price;

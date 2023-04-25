@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.common.ClothStatus;
+import project.laundry.data.request.OwnerReservationForm;
 import project.laundry.data.response.common.ReservationDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
@@ -13,7 +14,6 @@ import project.laundry.exception.EntityNotFoundException;
 import project.laundry.repository.ReservationRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +39,7 @@ public class ReservationListService {
                     .bu_address(business.getAddress())
                     .cu_phone(customer.getPhone())
                     .contact(business.getContact())
-                    .cloth_status(reservation.getClothStatus().getStatus())
+                    .cloth_status(reservation.getCloth_status())
                     .clothing_type(reservation.getClothing_type())
                     .request_detail(reservation.getRequest_detail())
                     .price(reservation.getPrice())
@@ -52,15 +52,34 @@ public class ReservationListService {
 
     // 알림 기능 필요
     @Transactional
-    public ResponseEntity<ReservationDto> updateReservation(ReservationDto form, String buId, String reId) {
+    public ResponseEntity<ReservationDto> updateReservation(OwnerReservationForm form, String buId, String reId) {
         Reservation reservation = reservationRepository.findById(reId).orElseThrow(EntityNotFoundException::new);
 
-        reservation.setClothStatus(ClothStatus.valueOf(form.getCloth_status()));
+        reservation.setCloth_status(ClothStatus.valueOf(form.getCloth_status()));
         reservation.setPrice(form.getPrice());
 
-        reservationRepository.save(reservation);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        Customer customer = savedReservation.getCustomer();
+        Business business = savedReservation.getBusiness();
+
+        ReservationDto build = ReservationDto.builder()
+                .re_id(reId)
+                .bu_id(business.getUid())
+                .cu_id(customer.getUid())
+                .cu_name(customer.getName())
+                .bu_name(business.getName())
+                .bu_address(business.getAddress())
+                .cu_phone(customer.getPhone())
+                .contact(business.getContact())
+                .clothing_type(savedReservation.getClothing_type())
+                .cloth_status(savedReservation.getCloth_status())
+                .price(savedReservation.getPrice())
+                .request_detail(savedReservation.getRequest_detail())
+                .createdAt(savedReservation.getCreateTime())
+                .build();
 
 
-        return ResponseEntity.ok(form);
+        return ResponseEntity.ok(build);
     }
 }

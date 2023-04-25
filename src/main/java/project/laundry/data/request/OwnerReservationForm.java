@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class reservationForm {
+public class OwnerReservationForm {
 
-   private String request_detail;
+    private Integer price;
 
-   private String clothing_type;
-
-
+    private String cloth_status;
 }

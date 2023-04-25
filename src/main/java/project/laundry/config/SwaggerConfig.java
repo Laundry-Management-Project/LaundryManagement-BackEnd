@@ -1,4 +1,4 @@
-package project.laundry;
+package project.laundry.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

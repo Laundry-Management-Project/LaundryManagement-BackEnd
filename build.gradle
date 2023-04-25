@@ -29,6 +29,10 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 

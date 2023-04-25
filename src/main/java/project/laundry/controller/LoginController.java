@@ -21,7 +21,7 @@ public class LoginController {
     @ApiIgnore
     @GetMapping("/login")
     public ResponseEntity<String> login() {
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok("login - GET - 200");
     }
 
     @ApiOperation(value = "손님 회원가입을 위한 메소드")

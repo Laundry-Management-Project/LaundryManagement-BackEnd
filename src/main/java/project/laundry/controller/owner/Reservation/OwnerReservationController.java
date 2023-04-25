@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.laundry.data.request.OwnerReservationForm;
 import project.laundry.data.response.common.ReservationDto;
 import project.laundry.service.owner.ReservationList.ReservationListService;
 
@@ -24,7 +25,7 @@ public class OwnerReservationController {
 
     @PutMapping("owner/{buId}/reservations/{reId}/update")
     public ResponseEntity<ReservationDto> updateReservation(
-            @RequestBody ReservationDto form,
+            @RequestBody OwnerReservationForm form,
             @PathVariable("buId") String buId,
             @PathVariable("reId") String reId) {
         return service.updateReservation(form, buId, reId);

@@ -3,6 +3,7 @@ package project.laundry.service.common.Signup;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.response.common.SignupDto;
@@ -22,33 +23,38 @@ public class OwnerSignUpService {
     private final OwnerRepository ownerRepository;
     private final FormValidator validator;
 
+    private final BCryptPasswordEncoder cryptEncoder;
+
     @Transactional
     public ResponseEntity<SignupDto> save(signUpForm form) {
 
 
         validator.signUpValidate(form);
 
-        Owner ownerEntity = ownerEntity(form);
-
         // 아이디 중복 체크
         if(validator.isDuplicateOwner(form.getId())) {
             throw new DuplicateUserException();
         }
+
+        Owner ownerEntity = ownerEntity(form);
 
         Owner owner = ownerRepository.save(ownerEntity);
         SignupDto rs = new SignupDto("회원 가입이 완료 되었습니다.", true);
         rs.setUid(owner.getUid());
 
         return ResponseEntity.ok(rs);
-
     }
 
     private Owner ownerEntity(signUpForm form) {
+
+        String encPwd = cryptEncoder.encode(form.getPassword());
+
         return Owner.builder()
                 .owner_id(form.getId())
-                .password(form.getPassword())
+                .password(encPwd)
                 .name(form.getName())
                 .phone(form.getPhone())
+                .role("ROLE_USER")
                 .build();
     }
 }

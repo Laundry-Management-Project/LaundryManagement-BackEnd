@@ -23,7 +23,6 @@ public class signUpForm {
     @NotBlank
     private String password;
 
-
     @ApiModelProperty(value = "사용자(손님, 사장님)의 핸드폰 번호", example = "010-1234-5678", required = true)
     @NotBlank
     private String phone;

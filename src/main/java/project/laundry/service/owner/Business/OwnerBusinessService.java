@@ -97,25 +97,14 @@ public class OwnerBusinessService {
     @Transactional
     public ResponseEntity<BusinessDto> updateBusiness(businessForm form, String buId, String uid) {
         Business business = businessRepository.findBusinessByBusiness_id(buId).orElseThrow(EntityNotFoundException::new);
-        Owner owner = ownerRepository.findById(uid).orElseThrow(EntityNotFoundException::new);
-        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(buId);
 
+        business.setName(form.getName());
+        business.setAddress(form.getAddress());
+        business.setBu_hour(form.getBu_hour());
+        business.setContact(form.getContact());
+        business.setIntro(form.getIntro());
 
-        Business updatedBusiness = Business.builder()
-                .uid(business.getUid())
-                .name(form.getName())
-                .address(form.getAddress())
-                .bu_hour(form.getBu_hour())
-                .contact(form.getContact())
-                .intro(form.getIntro())
-                .owner(owner)
-                .build();
-
-        // update 문제 있음 - N + 1
-        reservations.forEach(reservation -> reservation.setBusiness(updatedBusiness));
-
-
-        Business savedBusiness = businessRepository.save(updatedBusiness);
+        Business savedBusiness = businessRepository.save(business);
 
 
         BusinessDto businessDto = entityToDto(savedBusiness);
@@ -123,9 +112,11 @@ public class OwnerBusinessService {
         return ResponseEntity.ok(businessDto);
     }
 
+    @Transactional
     public void deleteBusiness(String buId) {
-        Business business = businessRepository.findBusinessByBusiness_id(buId).orElseThrow(EntityNotFoundException::new);
-        businessRepository.delete(business);
+        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(buId);
+        reservationRepository.deleteReservations(reservations);
+        businessRepository.deleteById(buId);
     }
 
     private BusinessDto entityToDto(Business business) {
