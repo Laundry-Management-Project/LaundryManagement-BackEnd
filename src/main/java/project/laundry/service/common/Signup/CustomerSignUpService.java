@@ -3,7 +3,6 @@ package project.laundry.service.common.Signup;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.entity.Customer;
@@ -23,7 +22,7 @@ public class CustomerSignUpService implements SignUpService {
     private final CustomerRepository customerRepository;
     private final FormValidator validator;
 
-    private final BCryptPasswordEncoder cryptEncoder;
+//    private final BCryptPasswordEncoder cryptEncoder;
 
     @Transactional
     public ResponseEntity<SignupDto> save(signUpForm form) {
@@ -44,11 +43,11 @@ public class CustomerSignUpService implements SignUpService {
 
     private Customer buildCustomerEntity(signUpForm form) {
         // 비밀번호 단방향 해시 암호화
-        String encPwd = cryptEncoder.encode(form.getPassword());
+//        String encPwd = cryptEncoder.encode(form.getPassword());
 
         return Customer.builder()
                 .customer_id(form.getId())
-                .password(encPwd)
+                .password(form.getPassword())
                 .name(form.getName())
                 .phone(form.getPhone())
                 .role("ROLE_USER")
