@@ -20,9 +20,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, String
     @Query("DELETE FROM Reservation r WHERE r in :reservation")
     void deleteReservations(@Param("reservation") Iterable<Reservation> reservation);
 
-    @Query("SELECT DAY(r.createTime) as day, SUM(r.price) as price FROM Reservation r WHERE YEAR(r.createTime) = :year AND MONTH(r.createTime) = :month GROUP BY DAY(r.createTime) ORDER BY DAY(r.createTime) ASC")
-    List<Object[]> findByDailyPrice(@Param("year") Integer year, @Param("month") Integer month);
-    @Query("SELECT MONTH(r.createTime) as month, SUM(r.price) as price FROM Reservation r WHERE YEAR(r.createTime) = :year GROUP BY MONTH(r.createTime) ORDER BY MONTH(r.createTime) ASC")
-    List<Object[]> findByMonthlyPrice(@Param("year") Integer year);
+    @Query("SELECT DAY(r.createTime) as day, SUM(r.price) as price FROM Reservation r WHERE YEAR(r.createTime) = :year AND MONTH(r.createTime) = :month AND r.id = :buId GROUP BY DAY(r.createTime) ORDER BY DAY(r.createTime) ASC")
+    List<Object[]> findByDailyPrice(@Param("buId") String buId, @Param("year") Integer year, @Param("month") Integer month);
+    @Query("SELECT MONTH(r.createTime) as month, SUM(r.price) as price FROM Reservation r WHERE YEAR(r.createTime) = :year AND r.id = :buId GROUP BY MONTH(r.createTime) ORDER BY MONTH(r.createTime) ASC")
+    List<Object[]> findByMonthlyPrice(@Param("buId") String buId, @Param("year") Integer year);
 
 }

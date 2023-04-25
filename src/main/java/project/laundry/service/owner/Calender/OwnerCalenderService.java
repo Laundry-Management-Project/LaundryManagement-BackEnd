@@ -2,6 +2,7 @@ package project.laundry.service.owner.Calender;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.response.common.dateDto;
@@ -18,24 +19,25 @@ import java.util.List;
 public class OwnerCalenderService {
     private final ReservationRepository reservationRepository;
 
-    public incomeDtoList responseIncomeDto(String buId, String year, String month, String day) {
-        incomeDtoList incomeDto = new incomeDtoList();
-        List<dateDto> daily_income = findDailyIncome(year, month);
-        List<dateDto> monthly_income = findMonthlyIncome(year);
+    public ResponseEntity<incomeDtoList> responseIncomeDto(String buId, String year, String month, String day) {
+        // buId로 해당 메장의 수입만 조회
+        incomeDtoList incomeDtoList = new incomeDtoList();
+        List<dateDto> daily_income = findDailyIncome(buId, year, month);
+        List<dateDto> monthly_income = findMonthlyIncome(buId, year);
 
-        incomeDto.setDaily_income(daily_income);
-        incomeDto.setMonthly_income(monthly_income);
+        incomeDtoList.setDaily_income(daily_income);
+        incomeDtoList.setMonthly_income(monthly_income);
 
 
-        return incomeDto;
+        return ResponseEntity.ok(incomeDtoList);
     }
 
-    private List<dateDto> findDailyIncome(String year, String month) {
+    private List<dateDto> findDailyIncome(String buId, String year, String month) {
         List<dateDto> dateDtoList = new ArrayList<>();
         Integer parseYear = Integer.parseInt(year);
         Integer parseMonth = Integer.parseInt(month);
 
-        List<Object[]> dailyPrice = reservationRepository.findByDailyPrice(parseYear, parseMonth);
+        List<Object[]> dailyPrice = reservationRepository.findByDailyPrice(buId, parseYear, parseMonth);
 
         for (Object[] day : dailyPrice) {
             dateDto dto = new dateDto();
@@ -47,11 +49,11 @@ public class OwnerCalenderService {
         return dateDtoList;
     }
 
-    private List<dateDto> findMonthlyIncome(String year) {
+    private List<dateDto> findMonthlyIncome(String buId, String year) {
         List<dateDto> dateDtoList = new ArrayList<>();
         Integer parseYear = Integer.parseInt(year);
 
-        List<Object[]> monthlyPrice = reservationRepository.findByMonthlyPrice(parseYear);
+        List<Object[]> monthlyPrice = reservationRepository.findByMonthlyPrice(buId, parseYear);
 
         for (Object[] month : monthlyPrice) {
             dateDto dto = new dateDto();

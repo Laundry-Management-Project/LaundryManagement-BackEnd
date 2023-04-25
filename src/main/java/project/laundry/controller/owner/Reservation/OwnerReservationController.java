@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.laundry.data.request.OwnerReservationForm;
+import project.laundry.data.response.ReservationDtoList;
 import project.laundry.data.response.common.ReservationDto;
 import project.laundry.service.owner.ReservationList.ReservationListService;
 
@@ -19,7 +20,7 @@ public class OwnerReservationController {
 
     @ApiOperation(value = "세탁물 예약 목록")
     @GetMapping("owner/{buId}/reservations")
-    public ResponseEntity<List<ReservationDto>> ReservationList(@ApiParam(name = "buId", value = "사업장 고유 uid", required = true) @PathVariable("buId") String buId) {
+    public ResponseEntity<ReservationDtoList> ReservationList(@ApiParam(name = "buId", value = "사업장 고유 uid", required = true) @PathVariable("buId") String buId) {
         return service.findReservationsByBusiness_id(buId);
     }
 

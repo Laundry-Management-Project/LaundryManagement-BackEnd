@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.laundry.data.request.businessForm;
+import project.laundry.data.response.BusinessDtoList;
 import project.laundry.data.response.common.BusinessDto;
 import project.laundry.service.owner.Business.OwnerBusinessService;
 
@@ -17,7 +18,7 @@ public class OwnerBusinessController {
     private final OwnerBusinessService service;
 
     @GetMapping("owner/businesses")
-    public ResponseEntity<List<BusinessDto>> businesses(@RequestParam("uId") String uId) {
+    public ResponseEntity<BusinessDtoList> businesses(@RequestParam("uId") String uId) {
         return service.findBusinessesByOwner_id(uId);
     }
 

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.laundry.data.response.ReservationDtoList;
 import project.laundry.data.response.common.ReservationDto;
 import project.laundry.data.request.CustomerReservationForm;
 import project.laundry.service.customer.CustomerReservationService;
@@ -18,7 +19,7 @@ public class CustomerReservationController {
 
     @ApiOperation(value = "세탁물 신청 목록")
     @GetMapping("customer/reservations")
-    public ResponseEntity<List<ReservationDto>> Reservations(@RequestParam("uId") String uId) {
+    public ResponseEntity<ReservationDtoList> Reservations(@RequestParam("uId") String uId) {
         return service.findReservations(uId);
     }
 

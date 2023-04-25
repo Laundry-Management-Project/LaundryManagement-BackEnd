@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.common.ClothStatus;
 import project.laundry.data.request.OwnerReservationForm;
+import project.laundry.data.response.ReservationDtoList;
 import project.laundry.data.response.common.ReservationDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
@@ -23,7 +24,7 @@ public class ReservationListService {
 
     private final ReservationRepository reservationRepository;
 
-    public ResponseEntity<List<ReservationDto>> findReservationsByBusiness_id(String buId) {
+    public ResponseEntity<ReservationDtoList> findReservationsByBusiness_id(String buId) {
         List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(buId);
 
         List<ReservationDto> dto = reservations.stream().map(reservation -> {
@@ -47,7 +48,9 @@ public class ReservationListService {
                     .build();
         }).collect(Collectors.toList());
 
-        return ResponseEntity.ok(dto);
+        ReservationDtoList build = ReservationDtoList.builder().reservations(dto).build();
+
+        return ResponseEntity.ok(build);
     }
 
     // 알림 기능 필요

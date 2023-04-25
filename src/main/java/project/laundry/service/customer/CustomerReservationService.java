@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.laundry.data.common.ClothStatus;
+import project.laundry.data.response.ReservationDtoList;
 import project.laundry.data.response.common.ReservationDto;
 import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
@@ -31,7 +32,7 @@ public class CustomerReservationService {
     private final CustomerRepository customerRepository;
     private final FormValidator validator;
 
-    public ResponseEntity<List<ReservationDto>> findReservations(String uId) {
+    public ResponseEntity<ReservationDtoList> findReservations(String uId) {
         List<Reservation> reservations = reservationRepository.findReservationsByCustomer_uid(uId);
 
 
@@ -56,9 +57,9 @@ public class CustomerReservationService {
                     .build();
         }).collect(Collectors.toList());
 
-//        ReservationDtoList build = ReservationDtoList.builder().reservations(collect).build();
+        ReservationDtoList build = ReservationDtoList.builder().reservations(collect).build();
 
-        return ResponseEntity.ok(collect);
+        return ResponseEntity.ok(build);
     }
 
     @Transactional

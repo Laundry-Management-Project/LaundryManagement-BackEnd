@@ -3,6 +3,7 @@ package project.laundry.controller.owner.Calender;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ public class CalenderController {
 
     @ApiOperation(value = "사업장 캘린더 세부 화면")
     @GetMapping("owner/{buId}/calender")
-    public incomeDtoList businessCalenderDetail(
+    public ResponseEntity<incomeDtoList> businessCalenderDetail(
             @ApiParam(name = "buId", value = "사업장 고유 uid", required = true) @PathVariable("buId") String buId,
             @ApiParam(name = "year", value = "년", example = "2023") @RequestParam String year,
             @ApiParam(name = "month", value = "월", example = "04") @RequestParam String month,

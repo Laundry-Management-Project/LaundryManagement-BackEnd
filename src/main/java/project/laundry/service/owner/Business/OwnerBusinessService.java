@@ -9,6 +9,7 @@ import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Owner;
 import project.laundry.data.entity.Reservation;
 import project.laundry.data.request.businessForm;
+import project.laundry.data.response.BusinessDtoList;
 import project.laundry.data.response.common.BusinessDto;
 import project.laundry.exception.EntityNotFoundException;
 import project.laundry.exception.FormNullPointerException;
@@ -48,10 +49,13 @@ public class OwnerBusinessService {
         return ResponseEntity.ok(dto);
     }
 
-    public ResponseEntity<List<BusinessDto>> findBusinessesByOwner_id(String uId) {
+    public ResponseEntity<BusinessDtoList> findBusinessesByOwner_id(String uId) {
         List<Business> businesses = businessRepository.findBusinessesByOwner_id(uId);
         List<BusinessDto> collect = businesses.stream().map(this::entityToDto).collect(Collectors.toList());
-        return ResponseEntity.ok(collect);
+        BusinessDtoList build = BusinessDtoList.builder()
+                .businesses(collect)
+                .build();
+        return ResponseEntity.ok(build);
     }
 
 
