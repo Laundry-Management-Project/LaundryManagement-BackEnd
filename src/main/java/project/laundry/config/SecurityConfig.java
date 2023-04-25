@@ -20,11 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable();
-        http.authorizeRequests()
-            .antMatchers("/owner/**").authenticated()  // 해당 경로는 인증이 필요함
-            .antMatchers("/customer/**").authenticated() // 해당 경로는 인증이 필요함
-            .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ROLE이 ROLE_ADMIN일 경우에만 허용함
-            .anyRequest().permitAll();
+//        http.authorizeRequests()
+//            .antMatchers("/owner/**").authenticated()  // 해당 경로는 인증이 필요함
+//            .antMatchers("/customer/**").authenticated() // 해당 경로는 인증이 필요함
+//            .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ROLE이 ROLE_ADMIN일 경우에만 허용함
+//            .anyRequest().permitAll();
 //            .and()
 //            .formLogin()
 //            .loginPage("/login")
