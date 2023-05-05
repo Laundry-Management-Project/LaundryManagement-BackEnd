@@ -4,8 +4,6 @@ import lombok.*;
 import project.laundry.data.response.responseStatus;
 
 @Getter @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class SignupDto extends responseStatus {
 
     private String uid;

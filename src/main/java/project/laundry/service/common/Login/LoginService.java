@@ -2,70 +2,69 @@ package project.laundry.service.common.Login;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.laundry.data.response.common.LoginDto;
+import project.laundry.config.auth.CustomerJwtTokenProvider;
+import project.laundry.config.auth.OwnerJwtTokenProvider;
 import project.laundry.data.entity.Customer;
 import project.laundry.data.entity.Owner;
 import project.laundry.data.request.loginForm;
-import project.laundry.exception.FormNullPointerException;
-import project.laundry.exception.UserNullPointerException;
+import project.laundry.data.response.common.LoginDto;
 import project.laundry.repository.CustomerRepository;
 import project.laundry.repository.OwnerRepository;
-
-import java.util.Objects;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Transactional(readOnly = true)
+@Transactional
 public class LoginService {
 
-    private final OwnerRepository ownerRepository;
+    private final PasswordEncoder encoder;
+    private final CustomerJwtTokenProvider customerJwtTokenProvider;
+    private final OwnerJwtTokenProvider ownerJwtTokenProvider;
+
     private final CustomerRepository customerRepository;
+    private final OwnerRepository ownerRepository;
 
     public ResponseEntity<LoginDto> authenticateLogin(loginForm form) {
-        if(form == null || Stream.of(form.getId(), form.getPassword(), form.getUser_type()).anyMatch(Objects::isNull)) {
-            throw new FormNullPointerException();
-        }
 
         if (form.getUser_type().equals("cu")) {
-            LoginDto loginDto = authenticCustomer(form);
-            System.out.println("loginDto.getUid() = " + loginDto.getUid());
-            System.out.println("loginDto.getMessage() = " + loginDto.getMessage());
-            return ResponseEntity.ok(loginDto);
+            return new ResponseEntity<>(authenticCustomer(form), HttpStatus.OK);
         } else if(form.getUser_type().equals("ow")){
-            return ResponseEntity.ok(authenticOwner(form));
+            return new ResponseEntity<>(authenticOwner(form), HttpStatus.OK);
         } else {
             throw new IllegalArgumentException("Invalid userType: " + form.getUser_type());
         }
     }
 
     private LoginDto authenticCustomer(loginForm form) {
+        Customer customer = customerRepository.findByCustomer_id(form.getId());
 
-        Customer customer = customerRepository.findByCustomer_idAndPassword(form.getId(), form.getPassword());
-
-        if(customer == null) {
-            throw new UserNullPointerException();
+        if(!encoder.matches(form.getPassword(), customer.getPassword())) {
+            throw new BadCredentialsException("잘못된 계정 정보입니다.");
         }
 
-        LoginDto dto = new LoginDto("로그인이 완료되었습니다.", true);
+        LoginDto dto = new LoginDto("로그인을 완료 했습니다.", true);
         dto.setUid(customer.getUid());
+        dto.setToken(customerJwtTokenProvider.createToken(customer.getCustomer_id(), customer.getRoles()));
 
         return dto;
     }
 
     private LoginDto authenticOwner(loginForm form) {
-        Owner owner = ownerRepository.findByOwner_idAndPassword(form.getId(), form.getPassword());
+        Owner owner = ownerRepository.findByOwner_id(form.getId());
 
-        if(owner == null) {
-            throw new UserNullPointerException();
+        if(!encoder.matches(form.getPassword(), owner.getPassword())) {
+            throw new BadCredentialsException("잘못된 계정 정보입니다.");
         }
 
-        LoginDto dto = new LoginDto("로그인이 완료되었습니다.", true);
+        LoginDto dto = new LoginDto("로그인을 완료 했습니다.", true);
         dto.setUid(owner.getUid());
+        dto.setToken(ownerJwtTokenProvider.createToken(owner.getOwner_id(), owner.getRoles()));
 
         return dto;
     }

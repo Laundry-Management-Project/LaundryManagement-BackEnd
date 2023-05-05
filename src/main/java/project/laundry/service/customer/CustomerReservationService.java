@@ -16,7 +16,6 @@ import project.laundry.exception.EntityNotFoundException;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.CustomerRepository;
 import project.laundry.repository.ReservationRepository;
-import project.laundry.service.common.FormValidator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +29,6 @@ public class CustomerReservationService {
     private final ReservationRepository reservationRepository;
     private final BusinessRepository businessRepository;
     private final CustomerRepository customerRepository;
-    private final FormValidator validator;
 
     public ResponseEntity<ReservationDtoList> findReservations(String uId) {
         List<Reservation> reservations = reservationRepository.findReservationsByCustomer_uid(uId);
@@ -67,8 +65,6 @@ public class CustomerReservationService {
 
         Customer customer = customerRepository.findByUid(uId);
         Business business = businessRepository.findBusinessByBusiness_id(buId).orElseThrow(EntityNotFoundException::new);
-
-        validator.saveReservationValidate(customer, business);
 
         Reservation reservationBuilder = Reservation.builder()
                 .cloth_status(ClothStatus.WASH_BEFORE)

@@ -2,13 +2,17 @@ package project.laundry.data.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
 @ApiModel(value = "회원가입 시 필요한 정보")
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class signUpForm {
 
     @ApiModelProperty(value = "로그인 시 필요한 id", example = "test", required = true)

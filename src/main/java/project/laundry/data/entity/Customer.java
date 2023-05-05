@@ -20,7 +20,7 @@ public class Customer {
     @Column(name = "customer_uid")
     private String uid;
 
-    @Column(name = "customer_id")
+    @Column(name = "customer_id", unique = true)
     private String customer_id;
 
     private String password;
@@ -29,9 +29,16 @@ public class Customer {
 
     private String phone;
 
-    private String role;
-
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Reservation> Reservations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<Customer_Authority> roles = new ArrayList<>();
+
+    public void setRoles(List<Customer_Authority> role) {
+        this.roles = role;
+        role.forEach(o -> o.setCustomer(this));
+    }
 
 }

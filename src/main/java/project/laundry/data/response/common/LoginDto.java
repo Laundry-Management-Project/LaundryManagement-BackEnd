@@ -10,6 +10,8 @@ public class LoginDto extends responseStatus {
 
     private String uid;
 
+    private String token;
+
     public LoginDto(String message, boolean status) {
         super(message, status);
     }

@@ -12,7 +12,6 @@ import project.laundry.exception.EntityNotFoundException;
 import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.CustomerRepository;
 import project.laundry.repository.ReservationRepository;
-import project.laundry.service.common.FormValidator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +22,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class CustomerBusinessService {
 
-    private final ReservationRepository reservationRepository;
     private final BusinessRepository businessRepository;
-    private final CustomerRepository customerRepository;
-    private final FormValidator validator;
 
     public ResponseEntity<BusinessDtoList> findBusinesses() {
         List<Business> businesses = businessRepository.findAll();
