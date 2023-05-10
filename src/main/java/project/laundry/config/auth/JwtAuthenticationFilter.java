@@ -18,6 +18,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomerJwtTokenProvider customerJwtTokenProvider;
     private final OwnerJwtTokenProvider ownerJwtTokenProvider;
 
+//    private final jwtTokenProvider JwtTokenProvider;
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
@@ -28,7 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 token = token.split(" ")[1].trim();
                 Authentication auth = customerJwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            } else if(ownerJwtTokenProvider.validateToken(token)) {
+            }
+            if(ownerJwtTokenProvider.validateToken(token)) {
                 token = token.split(" ")[1].trim();
                 Authentication auth = ownerJwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
