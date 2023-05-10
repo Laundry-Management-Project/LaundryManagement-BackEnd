@@ -37,20 +37,6 @@ public class SecurityConfig {
 
         http.httpBasic().disable()
                 .csrf().disable()
-                .cors(c -> {
-                        CorsConfigurationSource source = request -> {
-                            CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOrigins(
-                                    List.of("*")
-                            );
-                            config.setAllowedMethods(
-                                    List.of("*")
-                            );
-                            return config;
-                        };
-                        c.configurationSource(source);
-                    }
-                )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
