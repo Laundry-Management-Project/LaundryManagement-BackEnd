@@ -3,8 +3,11 @@ package project.laundry.config.auth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import project.laundry.config.auth.TokenProvider.CustomerJwtTokenProvider;
+import project.laundry.config.auth.TokenProvider.OwnerJwtTokenProvider;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomerJwtTokenProvider customerJwtTokenProvider;
     private final OwnerJwtTokenProvider ownerJwtTokenProvider;
 
-//    private final jwtTokenProvider JwtTokenProvider;
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
