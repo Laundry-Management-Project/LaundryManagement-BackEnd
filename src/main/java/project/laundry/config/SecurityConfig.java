@@ -1,5 +1,6 @@
 package project.laundry.config;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,14 +11,10 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import project.laundry.config.auth.JwtAuthenticationFilter;
-import project.laundry.config.auth.CustomerJwtTokenProvider;
-import project.laundry.config.auth.OwnerJwtTokenProvider;
-
-
-import java.util.List;
+import project.laundry.config.auth.Filter.CustomerJwtAuthenticationFilter;
+import project.laundry.config.auth.Filter.OwnerJwtAuthenticationFilter;
+import project.laundry.config.auth.TokenProvider.CustomerJwtTokenProvider;
+import project.laundry.config.auth.TokenProvider.OwnerJwtTokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -42,10 +39,13 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/signup/**", "/login").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .antMatchers("/customer/**").hasRole("USER_CUSTOMER")
+                .antMatchers("/owner/**").hasRole("USER_OWNER")
+                .anyRequest().permitAll()
                 .and()
                 // JWT 인증필터 적용
-                .addFilterBefore(new JwtAuthenticationFilter(customerJwtTokenProvider, ownerJwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new CustomerJwtAuthenticationFilter(customerJwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new OwnerJwtAuthenticationFilter(ownerJwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
 

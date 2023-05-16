@@ -1,4 +1,4 @@
-package project.laundry.config.auth;
+package project.laundry.config.auth.TokenProvider;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -19,13 +19,14 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OwnerJwtTokenProvider {
+public class OwnerJwtTokenProvider implements JwtTokenProvider<Owner_Authority> {
 
     @Value("${jwt.owner.secret.key}")
     private String salt;
@@ -44,7 +45,7 @@ public class OwnerJwtTokenProvider {
 
     public String createToken(String owner_id, List<Owner_Authority> roles) {
         Claims claims = Jwts.claims().setSubject(owner_id);
-        claims.put("roles", roles);
+        claims.put("roles", Collections.singletonList(roles));
         claims.put("user_type", "ow");
         Date now = new Date();
 
@@ -58,13 +59,13 @@ public class OwnerJwtTokenProvider {
 
     // 권한정보 획득
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = ownerUserDetailService.loadUserByUsername(this.getOwner_id(token));
+        UserDetails userDetails = ownerUserDetailService.loadUserByUsername(this.getUid(token));
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에 담겨있는 customer_id 획득
-    public String getOwner_id(String token) {
+    public String getUid(String token) {
         return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
     }
 
@@ -82,6 +83,7 @@ public class OwnerJwtTokenProvider {
             }
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             String user_type = claims.getBody().get("user_type").toString();
+            System.out.println("owner - user_type = " + user_type);
             boolean before = claims.getBody().getExpiration().before(new Date());
 
             return user_type.equalsIgnoreCase("ow") && !before;

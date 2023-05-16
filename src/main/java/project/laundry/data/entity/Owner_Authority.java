@@ -20,7 +20,7 @@ public class Owner_Authority {
     @JsonIgnore
     private Long id;
 
-    private String name;
+    private String role;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_uid")

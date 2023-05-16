@@ -11,7 +11,6 @@ import project.laundry.data.entity.Owner_Authority;
 import project.laundry.data.response.common.SignupDto;
 import project.laundry.data.entity.Owner;
 import project.laundry.data.request.signUpForm;
-import project.laundry.exception.DuplicateUserException;
 import project.laundry.repository.OwnerRepository;
 
 import java.util.Collections;
@@ -47,7 +46,7 @@ public class OwnerSignUpService {
                 .phone(form.getPhone())
                 .build();
 
-        owner.setRoles(Collections.singletonList(Owner_Authority.builder().name("USER_OWNER").build()));
+        owner.setRoles(Collections.singletonList(Owner_Authority.builder().role("ROLE_USER_OWNER").build()));
 
         return ownerRepository.save(owner);
     }

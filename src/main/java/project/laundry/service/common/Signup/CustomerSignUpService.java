@@ -11,7 +11,6 @@ import project.laundry.data.entity.Customer;
 import project.laundry.data.entity.Customer_Authority;
 import project.laundry.data.response.common.SignupDto;
 import project.laundry.data.request.signUpForm;
-import project.laundry.exception.DuplicateUserException;
 import project.laundry.repository.CustomerRepository;
 
 import java.util.Collections;
@@ -49,7 +48,7 @@ public class CustomerSignUpService implements SignUpService {
                 .phone(form.getPhone())
                 .build();
 
-        customer.setRoles(Collections.singletonList(Customer_Authority.builder().name("USER_CUSTOMER").build()));
+        customer.setRoles(Collections.singletonList(Customer_Authority.builder().role("ROLE_USER_CUSTOMER").build()));
 
         return customerRepository.save(customer);
     }

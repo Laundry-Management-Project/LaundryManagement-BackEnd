@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import project.laundry.data.entity.Owner;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -20,7 +19,7 @@ public class OwnerPrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return owner.getRoles().stream().map(o -> new SimpleGrantedAuthority(
-                o.getName()
+                o.getRole()
         )).collect(Collectors.toList());
     }
 
