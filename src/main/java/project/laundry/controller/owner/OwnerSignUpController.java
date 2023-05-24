@@ -2,6 +2,7 @@ package project.laundry.controller.owner;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +27,10 @@ public class OwnerSignUpController {
         return ResponseEntity.ok("ok");
     }
 
-    @ApiOperation(value = "사장님 회원가입을 위한 메소드")
-    @ApiImplicitParam(name = "form", value = "id, password, name, phone, userType(사용X)", dataType = "signUpForm")
+    @ApiOperation(value = "사장님 회원가입")
     @PostMapping("/ow")
-    public ResponseEntity<SignupDto> owner_signup(@RequestBody signUpForm form) {
+    public ResponseEntity<SignupDto> owner_signup(
+            @ApiParam(name = "form", value = "하단 signUpForm 참조", required = true) @RequestBody signUpForm form) {
         return ownerSignUpService.save(form);
     }
 

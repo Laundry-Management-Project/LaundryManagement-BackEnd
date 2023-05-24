@@ -2,6 +2,10 @@ package project.laundry.service.customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +22,7 @@ import project.laundry.repository.CustomerRepository;
 import project.laundry.repository.ReservationRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,8 +35,12 @@ public class CustomerReservationService {
     private final BusinessRepository businessRepository;
     private final CustomerRepository customerRepository;
 
-    public ResponseEntity<ReservationDtoList> findReservations(String uId) {
-        List<Reservation> reservations = reservationRepository.findReservationsByCustomer_uid(uId);
+    public ResponseEntity<ReservationDtoList> findReservations(String uId, Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, Sort.by("createTime").descending());
+        Page<Reservation> pages = reservationRepository.findReservationsByCustomer_uid(uId, pageRequest);
+        List<Reservation> reservations = pages.getContent();
+        Integer totalPages = pages.getTotalPages();
+        Long totalElements = pages.getTotalElements();
 
 
         List<ReservationDto> collect = reservations.stream().map(reservation -> {
@@ -55,7 +64,12 @@ public class CustomerReservationService {
                     .build();
         }).collect(Collectors.toList());
 
-        ReservationDtoList build = ReservationDtoList.builder().reservations(collect).build();
+        ReservationDtoList build = ReservationDtoList
+                .builder()
+                .reservations(collect)
+                .totalPages(totalPages)
+                .totalItems(totalElements)
+                .build();
 
         return ResponseEntity.ok(build);
     }
@@ -63,7 +77,7 @@ public class CustomerReservationService {
     @Transactional
     public ResponseEntity<ReservationDto> saveReservation(CustomerReservationForm form, String buId, String uId) {
 
-        Customer customer = customerRepository.findByUid(uId);
+        Customer customer = customerRepository.findById(uId).orElseThrow(EntityNotFoundException::new);
         Business business = businessRepository.findBusinessByBusiness_id(buId).orElseThrow(EntityNotFoundException::new);
 
         Reservation reservationBuilder = Reservation.builder()
@@ -110,7 +124,6 @@ public class CustomerReservationService {
 
     @Transactional
     public void deleteReservation(String reId, String uId) {
-        List<Reservation> reservations = reservationRepository.findReservationsByCustomer_uid(uId);
-        reservationRepository.deleteReservations(reservations);
+        reservationRepository.deleteById(reId);
     }
 }

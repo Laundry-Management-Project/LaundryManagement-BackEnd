@@ -2,6 +2,8 @@ package project.laundry.service.customer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.CustomerRepository;
 import project.laundry.repository.ReservationRepository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +27,13 @@ public class CustomerBusinessService {
 
     private final BusinessRepository businessRepository;
 
-    public ResponseEntity<BusinessDtoList> findBusinesses() {
-        List<Business> businesses = businessRepository.findAll();
+    public ResponseEntity<BusinessDtoList> findBusinesses(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        Page<Business> pages = businessRepository.findAll(pageRequest);
+
+        List<Business> businesses = pages.getContent();
+        int totalPages = pages.getTotalPages();
+        long totalElements = pages.getTotalElements();
 
         List<BusinessDto> businessDtoList = businesses.stream().map(business -> BusinessDto.builder()
                 .bu_id(business.getUid())
@@ -36,7 +44,12 @@ public class CustomerBusinessService {
                 .intro(business.getIntro())
                 .build()).collect(Collectors.toList());
 
-        BusinessDtoList build = BusinessDtoList.builder().businesses(businessDtoList).build();
+        BusinessDtoList build = BusinessDtoList
+                .builder()
+                .businesses(businessDtoList)
+                .totalPages(totalPages)
+                .totalItems(totalElements)
+                .build();
 
         return ResponseEntity.ok(build);
     }

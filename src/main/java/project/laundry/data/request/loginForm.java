@@ -10,13 +10,13 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel(value = "로그인 시 필요한 정보")
+@ApiModel(value = "로그인 폼")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class loginForm {
 
-    @ApiModelProperty(value = "손님, 사장을 구분하기 위한 타입", example = "cu", required = true)
+    @ApiModelProperty(value = "손님, 사장을 구분하기 위한 타입(대문자 허용 X)", example = "cu | ow", required = true)
     private String user_type;
 
     @ApiModelProperty(value = "로그인 시 필요한 id", example = "test", required = true)

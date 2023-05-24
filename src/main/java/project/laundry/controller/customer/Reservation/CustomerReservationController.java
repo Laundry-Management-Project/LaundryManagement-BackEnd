@@ -1,6 +1,7 @@
 package project.laundry.controller.customer.Reservation;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,32 +20,37 @@ public class CustomerReservationController {
 
     @ApiOperation(value = "세탁물 신청 목록")
     @GetMapping("customer/reservations")
-    public ResponseEntity<ReservationDtoList> Reservations(@RequestParam("uId") String uId) {
-        return service.findReservations(uId);
+    public ResponseEntity<ReservationDtoList> Reservations(
+            @ApiParam(name = "uId", value = "손님 고유 id", required = true) @RequestParam("uId") String uId,
+            @ApiParam(name = "page", value = "현재 페이지의 숫자 (1 부터 시작)", required = true, example = "1") @RequestParam("page") Integer pageNumber,
+            @ApiParam(name = "size", value = "현재 페이지에 보여줄 요소의 개수", required = true, example = "10") @RequestParam("size") Integer pageSize) {
+        return service.findReservations(uId, pageNumber, pageSize);
     }
 
-    @ApiOperation(value = "손님 예약(등록)")
+    @ApiOperation(value = "예약(등록)")
     @PostMapping("customer/{buId}/reservation")
     public ResponseEntity<ReservationDto> addReservation(
-            @RequestBody CustomerReservationForm form,
-            @PathVariable("buId") String buId,
-            @RequestParam("uId") String uId) {
+            @ApiParam(name = "form", value = "하단 CustomerReservationForm 참조", required = true) @RequestBody CustomerReservationForm form,
+            @ApiParam(name = "buId", value = "세탁소 고유 id", required = true) @PathVariable("buId") String buId,
+            @ApiParam(name = "uId", value = "손님 고유 id", required = true) @RequestParam("uId") String uId) {
 
         return service.saveReservation(form, buId, uId);
     }
 
+    @ApiOperation(value = "예약 업데이트")
     @PutMapping("customer/{reId}/update")
     public void updateReservation(
-            @RequestBody CustomerReservationForm form,
-            @PathVariable("reId") String reId) {
+            @ApiParam(name = "form", value = "하단 CustomerReservationForm 참조", required = true) @RequestBody CustomerReservationForm form,
+            @ApiParam(name = "reId", value = "예약 고유 id", required = true) @PathVariable("reId") String reId) {
 
         service.updateReservation(form, reId);
     }
 
+    @ApiOperation(value = "예약 삭제")
     @DeleteMapping("customer/{reId}/delete")
     public void deleteReservation(
-            @PathVariable("reId") String reId,
-            @RequestParam("uId") String uId) {
+            @ApiParam(name = "reId", value = "예약 고유 id", required = true) @PathVariable("reId") String reId,
+            @ApiParam(name = "uId", value = "손님 고유 id", required = true) @RequestParam("uId") String uId) {
         service.deleteReservation(reId, uId);
     }
 

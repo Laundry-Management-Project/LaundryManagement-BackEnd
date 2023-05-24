@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@ApiModel(value = "사업장 응답 데이터")
+@ApiModel(value = "세탁소 응답 데이터")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,8 +31,4 @@ public class BusinessDto {
 
     @ApiModelProperty(value = "세탁소 소개글", example = "안녕하세요 XX 세탁소입니다.", required = true)
     private String intro;
-
-
-//    @ApiModelProperty(value = "응답 메시지", example = "올바르지 않은 요청입니다.", required = true)
-//    private String message;
 }

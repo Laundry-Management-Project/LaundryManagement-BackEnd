@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@ApiModel(value = "회원가입 시 필요한 정보")
+@ApiModel(value = "회원가입 폼")
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class signUpForm {
     @NotBlank
     private String id;
 
-    @ApiModelProperty(value = "사용자(손님, 사장님)의 이름 또는 닉네임", example = "홍길동, TestName", required = true)
+    @ApiModelProperty(value = "사용자(손님, 사장님)의 이름 또는 닉네임", example = "홍길동 | TestName", required = true)
     @NotBlank
     private String name;
 

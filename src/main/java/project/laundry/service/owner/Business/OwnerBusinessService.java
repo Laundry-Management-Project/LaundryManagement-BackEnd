@@ -2,6 +2,10 @@ package project.laundry.service.owner.Business;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +53,19 @@ public class OwnerBusinessService {
         return ResponseEntity.ok(dto);
     }
 
-    public ResponseEntity<BusinessDtoList> findBusinessesByOwner_id(String uId) {
-        List<Business> businesses = businessRepository.findBusinessesByOwner_id(uId);
+    public ResponseEntity<BusinessDtoList> findBusinessesByOwner_id(String uId, Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("name").ascending());
+        Page<Business> pages = businessRepository.findBusinessesByOwner_id(uId, pageable);
+        List<Business> businesses = pages.getContent();
+        int totalPages = pages.getTotalPages();
+        long totalElements = pages.getTotalElements();
+
         List<BusinessDto> collect = businesses.stream().map(this::entityToDto).collect(Collectors.toList());
+
         BusinessDtoList build = BusinessDtoList.builder()
                 .businesses(collect)
+                .totalPages(totalPages)
+                .totalItems(totalElements)
                 .build();
         return ResponseEntity.ok(build);
     }
@@ -118,8 +130,8 @@ public class OwnerBusinessService {
 
     @Transactional
     public void deleteBusiness(String buId) {
-        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(buId);
-        reservationRepository.deleteReservations(reservations);
+        List<Reservation> reservations = reservationRepository.findReservationsByBusinessUid(buId);
+        reservationRepository.deleteReservationsWithInQuery(reservations);
         businessRepository.deleteById(buId);
     }
 

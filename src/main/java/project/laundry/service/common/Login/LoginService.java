@@ -42,7 +42,7 @@ public class LoginService {
     }
 
     private LoginDto authenticCustomer(loginForm form) {
-        Customer customer = customerRepository.findByCustomer_id(form.getId());
+        Customer customer = customerRepository.findCustomerByCustomerId(form.getId());
 
         if(!encoder.matches(form.getPassword(), customer.getPassword())) {
             throw new BadCredentialsException("잘못된 계정 정보입니다.");

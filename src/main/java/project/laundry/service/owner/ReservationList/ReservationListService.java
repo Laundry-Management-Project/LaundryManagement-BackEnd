@@ -1,6 +1,10 @@
 package project.laundry.service.owner.ReservationList;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +28,12 @@ public class ReservationListService {
 
     private final ReservationRepository reservationRepository;
 
-    public ResponseEntity<ReservationDtoList> findReservationsByBusiness_id(String buId) {
-        List<Reservation> reservations = reservationRepository.findReservationsByBusiness_uid(buId);
+    public ResponseEntity<ReservationDtoList> findReservationsByBusiness_id(String buId, Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("createTime").descending());
+        Page<Reservation> pages = reservationRepository.findReservationsByBusinessUid(buId, pageable);
+        List<Reservation> reservations = pages.getContent();
+        Integer totalPages = pages.getTotalPages();
+        Long totalElements = pages.getTotalElements();
 
         List<ReservationDto> dto = reservations.stream().map(reservation -> {
             Business business = reservation.getBusiness();
@@ -48,7 +56,12 @@ public class ReservationListService {
                     .build();
         }).collect(Collectors.toList());
 
-        ReservationDtoList build = ReservationDtoList.builder().reservations(dto).build();
+        ReservationDtoList build = ReservationDtoList
+                .builder()
+                .reservations(dto)
+                .totalPages(totalPages)
+                .totalItems(totalElements)
+                .build();
 
         return ResponseEntity.ok(build);
     }
