@@ -61,7 +61,7 @@ public class CustomerBusinessService {
                 .bu_id(business.getUid())
                 .name(business.getName())
                 .address(business.getAddress())
-                .bu_hour(business.getAddress())
+                .bu_hour(business.getBu_hour())
                 .contact(business.getContact())
                 .intro(business.getIntro())
                 .build();
