@@ -12,7 +12,7 @@ public class CustomerReservationForm {
    @ApiModelProperty(value = "추가 내용", example = "흰색 반팔티랑 검은색 패딩은 따로 세탁 해주세요.")
    private String request_detail;
 
-   @ApiModelProperty(value = "세탁물 종류", example = "흰색 반팔티, 검정색 패", required = true)
+   @ApiModelProperty(value = "세탁물 종류", example = "흰색 반팔티, 검정색 패딩", required = true)
    private String clothing_type;
 
 
