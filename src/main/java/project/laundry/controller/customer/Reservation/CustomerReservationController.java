@@ -10,8 +10,6 @@ import project.laundry.data.response.common.ReservationDto;
 import project.laundry.data.request.CustomerReservationForm;
 import project.laundry.service.customer.CustomerReservationService;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 public class CustomerReservationController {
@@ -20,7 +18,7 @@ public class CustomerReservationController {
 
     @ApiOperation(value = "세탁물 신청 목록")
     @GetMapping("customer/reservations")
-    public ResponseEntity<ReservationDtoList> Reservations(
+    public ResponseEntity<ReservationDtoList> reservations(
             @ApiParam(name = "uId", value = "손님 고유 id", required = true) @RequestParam("uId") String uId,
             @ApiParam(name = "page", value = "현재 페이지의 숫자 (1 부터 시작)", required = true, example = "1") @RequestParam("page") Integer pageNumber,
             @ApiParam(name = "size", value = "현재 페이지에 보여줄 요소의 개수", required = true, example = "10") @RequestParam("size") Integer pageSize) {

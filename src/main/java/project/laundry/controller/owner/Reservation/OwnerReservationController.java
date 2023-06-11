@@ -27,6 +27,15 @@ public class OwnerReservationController {
         return service.findReservationsByBusiness_id(buId, pageNumber, pageSize);
     }
 
+    @ApiOperation(value = "세탁물 예약 세부사항")
+    @GetMapping("owner/{buId}/reservations/{reId}")
+    public ResponseEntity<ReservationDto> reservation(
+            @ApiParam(name = "buId", value = "세탁소 고유 id", required = true) @PathVariable("buId") String buId,
+            @ApiParam(name = "reId", value = "예약 고유 id", required = true) @PathVariable("reId") String reId
+    ) {
+        return service.findReservation(reId, buId);
+    }
+
     @ApiOperation(value = "세탁물 수정")
     @PutMapping("owner/{buId}/reservations/{reId}/update")
     public ResponseEntity<ReservationDto> updateReservation(

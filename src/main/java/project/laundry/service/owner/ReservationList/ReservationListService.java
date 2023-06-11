@@ -16,9 +16,11 @@ import project.laundry.data.entity.Business;
 import project.laundry.data.entity.Customer;
 import project.laundry.data.entity.Reservation;
 import project.laundry.exception.EntityNotFoundException;
+import project.laundry.repository.BusinessRepository;
 import project.laundry.repository.ReservationRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +29,31 @@ import java.util.stream.Collectors;
 public class ReservationListService {
 
     private final ReservationRepository reservationRepository;
+
+    public ResponseEntity<ReservationDto> findReservation(String reId, String buId) {
+        Reservation reservation = reservationRepository.findReservationByIdAndBusinessId(reId);
+
+        Business business = reservation.getBusiness();
+        Customer customer = reservation.getCustomer();
+
+        ReservationDto build = ReservationDto.builder()
+                .re_id(reservation.getId())
+                .bu_id(buId)
+                .cu_id(customer.getCustomer_id())
+                .cu_name(customer.getName())
+                .bu_name(business.getName())
+                .bu_address(business.getAddress())
+                .cu_phone(customer.getPhone())
+                .contact(business.getContact())
+                .clothing_type(reservation.getClothing_type())
+                .cloth_status(reservation.getCloth_status())
+                .price(reservation.getPrice())
+                .request_detail(reservation.getRequest_detail())
+                .createdAt(reservation.getCreateTime())
+                .build();
+
+        return ResponseEntity.ok(build);
+    }
 
     public ResponseEntity<ReservationDtoList> findReservationsByBusiness_id(String buId, Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by("createTime").descending());

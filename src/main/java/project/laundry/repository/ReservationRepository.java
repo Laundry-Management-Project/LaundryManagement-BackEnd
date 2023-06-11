@@ -13,6 +13,9 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
 
 
+    @Query(value = "SELECT r FROM Reservation r JOIN FETCH r.customer JOIN FETCH r.business WHERE r.id = :re_id")
+    Reservation findReservationByIdAndBusinessId(@Param("re_id") String re_id);
+
     List<Reservation> findReservationsByBusinessUid(@Param("bu_id") String bu_id);
     Page<Reservation> findReservationsByBusinessUid(@Param("bu_id") String bu_id, Pageable pageable);
 
