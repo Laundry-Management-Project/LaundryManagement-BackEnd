@@ -1,3 +1,5 @@
+> 현재 웹에서 진행하던 프로젝트를 안드로이드로 변경하여 진행 중 입니다. 아래 링크는 웹으로 개발한 코드를 보실 수 있습니다.<br>
+> https://github.com/Yu-YoungWoo/LaundryManagement
 
 # 세탁나라 (세탁소 장부 관리 프로젝트)
 
@@ -31,9 +33,6 @@
   - 원하는 세탁를 찾아 예약
 
 <br>
-
-> 현재 웹에서 진행하던 프로젝트를 안드로이드로 변경하여 진행 중 입니다. 아래 링크는 웹으로 개발한 코드를 보실 수 있습니다.<br>
-> https://github.com/Yu-YoungWoo/LaundryManagement
 
 ### 메인화면
 <img src="/IMG/home.png"  width="700" height="370">
